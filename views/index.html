@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>注册界面</title>
+    <style>
+        .list{
+            text-align: center;
+        }
+        .three input{
+            margin-top: 16px;
+            margin-bottom: 16px;
+            border-color: #00BCD4;
+            border-width: 1px;
+            width: 260px;
+            height: 40px;
+        }
+        .four{
+            font-size: 1.5em;
+            color: cornflowerblue;
+        }
+    </style>
+</head>
+<body>
+<div class="list">
+    <h1><p>欢迎来到xjl之家</p></h1>
+    <h1><p>====请注册====</p></h1>
+    <p style="color: red;"><%= errors %></p>
+<form action="/login" method="post" class="three" onsubmit="return check()">
+    用&nbsp;&nbsp;&nbsp;&nbsp;户&nbsp;&nbsp;&nbsp;&nbsp;名：     <input id="useName" type="text" name="useName" required minlength="4" maxlength="8" placeholder="请输入用户名(长度在4-8个字符之间)"><br>
+    姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：<input type="text" id="name" name="name" placeholder="请输入姓名" required><br>
+    密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码：<input type="password" id="password" name="password" required pattern="^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,14}$" placeholder="请输入密码(长度6-14，且包含字母和数字)"><br>
+    再次输入密码：<input type="password" id="passwords" placeholder="两次输入的密码需一致" required/><br>
+    邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;箱：<input type="email" class="two" id="email" name="email" placeholder="请输入邮箱"><br>
+    验&nbsp;&nbsp;&nbsp;&nbsp;证&nbsp;&nbsp;&nbsp;&nbsp;码：<input type="text" name="code"><br>
+    <input type="submit" value="注册" class="four">
+</form>
+<button id="sendEmail">发送验证码</button><p id="text"></p>
+<a href="/login">已有账户！点击登录</a>
+</div>
+<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script>
+    let check = () => {
+        if (document.getElementById("password").value !== document.getElementById("passwords").value) {
+            alert("两次输入的密码不一致")
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    $('#sendEmail').on('click',() => {
+        $.post('/sendEmail',{email:$('#email')[0].value},function(response){
+             $('#text')[0].innerHTML = response.text
+        })
+    })
+</script>
+</body>
+</html>
