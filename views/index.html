@@ -1,60 +1,244 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>注册界面</title>
-    <style>
-        .list{
-            text-align: center;
-        }
-        .three input{
-            margin-top: 16px;
-            margin-bottom: 16px;
-            border-color: #00BCD4;
-            border-width: 1px;
-            width: 260px;
-            height: 40px;
-        }
-        .four{
-            font-size: 1.5em;
-            color: cornflowerblue;
-        }
-    </style>
+<meta charset="utf-8">
+<title>襄阳牛肉面</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="" />
+<meta name="author" content="http://cssmoban.com" />
+<!-- css --> 
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="/materialize/css/materialize.min.css" media="screen,projection" />
+<link href="/css/bootstrap.min.css" rel="stylesheet" />
+<link href="/css/fancybox/jquery.fancybox.css" rel="stylesheet"> 
+<link href="/css/flexslider.css" rel="stylesheet" /> 
+<link href="/css/style.css" rel="stylesheet" />
+<link href="/css/gallery-1.css" rel="stylesheet">
+<link href="/css/magnific-popup.css" rel="stylesheet"> 
+<style>
+	#sbiao li {
+		padding-right: 35px;
+	}
+</style>
+
 </head>
 <body>
-<div class="list">
-    <h1><p>欢迎来到xjl之家</p></h1>
-    <h1><p>====请注册====</p></h1>
-    <p style="color: red;"><%= errors %></p>
-<form action="/login" method="post" class="three" onsubmit="return check()">
-    用&nbsp;&nbsp;&nbsp;&nbsp;户&nbsp;&nbsp;&nbsp;&nbsp;名：     <input id="useName" type="text" name="useName" required minlength="4" maxlength="8" placeholder="请输入用户名(长度在4-8个字符之间)"><br>
-    姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：<input type="text" id="name" name="name" placeholder="请输入姓名" required><br>
-    密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码：<input type="password" id="password" name="password" required pattern="^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,14}$" placeholder="请输入密码(长度6-14，且包含字母和数字)"><br>
-    再次输入密码：<input type="password" id="passwords" placeholder="两次输入的密码需一致" required/><br>
-    邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;箱：<input type="email" class="two" id="email" name="email" placeholder="请输入邮箱"><br>
-    验&nbsp;&nbsp;&nbsp;&nbsp;证&nbsp;&nbsp;&nbsp;&nbsp;码：<input type="text" name="code"><br>
-    <input type="submit" value="注册" class="four">
-</form>
-<button id="sendEmail">发送验证码</button><p id="text"></p>
-<a href="/login">已有账户！点击登录</a>
-</div>
-<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
-<script>
-    let check = () => {
-        if (document.getElementById("password").value !== document.getElementById("passwords").value) {
-            alert("两次输入的密码不一致")
-            return false;
-        } else {
-            return true;
-        }
-    }
+<div id="wrapper" class="home-page"> 
+	<!-- start header -->
+	<header>
+        <div class="navbar navbar-default navbar-static-top">
+			<div class="container">
+				<div class="navbar-header">
+					<p style="    font-size: 2em;padding-top: 18px;color: red;font-weight: 900;">襄阳牛肉面</p>
+				</div>
+				<div class="navbar-collapse collapse ">
+					<ul class="nav navbar-nav">
+						<li><a class="waves-effect waves-dark" href="/index">首页</a></li>
+						<li class="dropdown active">
+							<a href="#" data-toggle="dropdown" class="dropdown-toggle waves-effect waves-dark">面食分类<b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><a class="waves-effect waves-dark" href="/beef">牛肉面、粉</a></li>
+								<li><a class="waves-effect waves-dark" href="/nood">素菜配菜面、粉</a></li>
+								<li><a class="waves-effect waves-dark" href="/drink">饮料</a></li>
+								<li><a class="waves-effect waves-dark" href="/other">其他</a></li>
+							</ul>
+						</li>
+						<li><a class="waves-effect waves-dark" href="/click">点单</a></li>
+						<li><a class="waves-effect waves-dark" href="/login">登录</a></li>
+						<li><a class="waves-effect waves-dark" href="/resg">注册</a></li>
+						<li><a class="waves-effect waves-dark" href="/contact">客户反馈</a></li>
+						<li><a class="waves-effect waves-dark" href="/about">关于我们</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</header>
+	<!-- end header -->
+	<section id="banner">
+	 
+	<!-- Slider -->
+        <div id="main-slider" class="flexslider">
+            <ul class="slides">
+              <li>
+                <img src="/img/slides/1.jpg" alt="" />
+                <div class="flex-caption">
+                    <h3>襄阳牛肉面!</h3> 
+					<p>舌尖上的牛肉面</p> 
+					 
+                </div>
+              </li>
+              <li>
+                <img src="img/slides/2.jpg" alt="" />
+                <div class="flex-caption">
+                    <h3>精选上等碱面</h3> 
+					<p>只为一碗美味好面</p> 
+					 
+                </div>
+              </li>
+            </ul>
+        </div>
+	<!-- end slider --> 
+	</section>  
+		<section class="dishes">
+		<div class="container">
+	 	<div class="row">
+			<div class="col-md-12">
+				<div class="aligncenter"><h2 class="aligncenter">店内网红</h2>广受大众好评的三款面食，本店推荐哦</div>
+				<br/>
+			</div>
+		</div>
+	
+	<div class="row service-v1 margin-bottom-40">
+		<div class="col-md-4 col-sm-6 col-xs-12 gallery-item-wrapper artwork creative">
+			<div class="gallery-item">
+				<div class="gallery-thumb">
+					<img src="/img/service2.jpg" class="img-responsive" alt="1st gallery Thumb">
+					<div class="image-overlay"></div>
+					<a href="/img/service2.jpg" class="gallery-zoom"><i class="fa fa-eye"></i></a>
+					
+				</div>
+				<div class="gallery-details">
+					<div class="editContent">
+						<h5>招牌牛肉面</h5>
+					</div>
+					<div class="editContent">
+						<p>
+							本店特色，也是销量最好的面，用精选的碱面和汤底
+						</p>
+						<p>
+							最后加入灵魂的牛肉，配上面，令人啧啧称赞
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+			<div class="col-md-4 col-sm-6 col-xs-12 gallery-item-wrapper artwork creative">
+				<div class="gallery-item">
+					<div class="gallery-thumb">
+						<img src="/img/service1.jpg" class="img-responsive" alt="1st gallery Thumb">
+						<div class="image-overlay"></div>
+						<a href="/img/service1.jpg" class="gallery-zoom"><i class="fa fa-eye"></i></a>
+						
+					</div>
+					<div class="gallery-details">
+						<div class="editContent">
+							<h5>豆腐牛杂面</h5>
+						</div>
+						<div class="editContent">
+							<p>
+                                选用上好碱面，用热水煮熟后，假如提前熬好的高汤
+                            </p>
+                            <p>
+                                加入豆腐，以及用十几味香料煮好的牛杂
+                            </p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4 col-sm-6 col-xs-12 gallery-item-wrapper artwork creative">
+				<div class="gallery-item">
+					<div class="gallery-thumb">
+						<img src="/img/service3.jpg" class="img-responsive" alt="1st gallery Thumb">
+						<div class="image-overlay"></div>
+						<a href="/img/service3.jpg" class="gallery-zoom"><i class="fa fa-eye"></i></a>
+						
+					</div>
+					<div class="gallery-details">
+						<div class="editContent">
+							<h5>豆腐海带面</h5>
+						</div>
+						<div class="editContent">
+							<p>
+                                碱面配上清淡的豆腐再碰撞酸爽的海带
+                            </p>
+                            <p>
+                                在红油的沉沦中，抽空来一碗，解腻又解馋
+                            </p>
+						</div>
+					</div>
+				</div>
+			</div>
+        </div>
+		</div>
+		</section>
+	<section id="content"> 
+	<div class="container">
+	
+		<section class="services">
+	    	<div class="row">
+			<div class="col-md-12">
+				<div class="aligncenter"><h2 class="aligncenter">三餐</h2>本店有提供一日三餐，让您一站解决一天的快乐</div>
+				<br/>
+			</div>
+		</div>
 
-    $('#sendEmail').on('click',() => {
-        $.post('/sendEmail',{email:$('#email')[0].value},function(response){
-             $('#text')[0].innerHTML = response.text
-        })
-    })
-</script>
+	 <div class="row">
+            <div class="col-sm-4 info-blocks">
+                <i class="icon-info-blocks material-icons"></i>
+                <div class="info-blocks-in">
+                    <h3>Breakfast</h3>
+                    <p>早餐：各类面食，豆浆，鸡蛋，每日有各种馅的馍馍，白粥，皮蛋粥</p>
+                </div>
+            </div>
+            <div class="col-sm-4 info-blocks">
+                <i class="icon-info-blocks material-icons"></i>
+                <div class="info-blocks-in">
+                    <h3>Lunch</h3>
+                    <p>中餐：各类面食，各类炒饭，各种陷馍馍</p>
+                </div>
+            </div>
+			<div class="col-sm-4 info-blocks">
+                <i class="icon-info-blocks material-icons"></i>
+                <div class="info-blocks-in">
+                    <h3>Dinner</h3>
+                    <p>晚餐：各类面食，特定热汤</p>
+                </div>
+            </div>
+        </div>
+		</section>
+	</div>
+	</section>
+	
+	<footer style="padding: 0;">
+		<div id="sub-footer">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-6">
+						<div class="copyright">
+							<p>
+								<span>&copy; 襄阳牛肉面 2021 All right reserved. </span>
+							</p>
+						</div>
+					</div>
+					<div class="col-lg-6">
+						<ul id="sbiao" style="display: -webkit-box;">
+							<li>telephone：13177754877</li>
+							<li>email：2020990145@qq.com</li>
+							<li>address：武汉CBD襄阳牛肉面</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+</div>
+<a href="#" class="scrollup waves-effect waves-dark"><i class="fa fa-angle-up active"></i></a>
+<!-- javascript
+    ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="/js/jquery.js"></script>
+<script src="/js/jquery.easing.1.3.js"></script>
+<script src="/materialize/js/materialize.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.fancybox.pack.js"></script>
+<script src="/js/jquery.fancybox-media.js"></script>  
+<script src="/js/jquery.flexslider.js"></script>
+<script src="/js/animate.js"></script>
+<!-- Vendor Scripts -->
+<script src="/js/modernizr.custom.js"></script>
+<script src="/js/jquery.isotope.min.js"></script>
+<script src="/js/jquery.magnific-popup.min.js"></script>
+<script src="/js/animate.js"></script> 
+<script src="/js/custom.js"></script>
 </body>
 </html>

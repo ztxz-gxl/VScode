@@ -3,12 +3,52 @@ let router = express.Router()
 let sql = require('./db')
 let ver = require('./verification')
 
-router.get('/', function (_req, res) {
-    res.render('index.html')
+router.get('/resg', function (_req, res) {
+    res.render('resg.html')
 })
 
 router.get('/login', function (_req, res) {
     res.render('login.html')
+})
+
+router.get('/about', function (_req, res) {
+    res.render('about.html')
+})
+
+router.get('/back', function (_req, res) {
+    res.render('back.html')
+})
+
+router.get('/beef', function (_req, res) {
+    res.render('beef.html')
+})
+
+router.get('/click', function (_req, res) {
+    res.render('click.html')
+})
+
+router.get('/contact', function (_req, res) {
+    res.render('contact.html')
+})
+
+router.get('/drink', function (_req, res) {
+    res.render('drink.html')
+})
+
+router.get('/index', function (_req, res) {
+    res.render('index.html')
+})
+
+router.get('/nood', function (_req, res) {
+    res.render('nood.html')
+})
+
+router.get('/other', function (_req, res) {
+    res.render('other.html')
+})
+
+router.get('/owen', function (_req, res) {
+    res.render('owen.html')
 })
 
 router.post('/login', function (req, res) {

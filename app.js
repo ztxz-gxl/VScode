@@ -1,6 +1,7 @@
 let express = require('express')
 let bodyParser = require('body-parser')
 let router = require('./router')
+let path = require('path')
 let settings = require('./settings'); //配置信息
 let flash = require('connect-flash');
 let session = require('express-session');
@@ -11,6 +12,7 @@ app.engine('html', require('express-art-template'))
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+app.use(express.static(path.join(__dirname, 'public')))
 // app.set('views', './views')
 app.use(session({
     secret: settings.cookieSecret, //加密

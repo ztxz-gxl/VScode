@@ -2,7 +2,7 @@
 <html>
 
 <head>
-	<title>登录</title>
+	<title>注册</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta charset="UTF-8" />
 	<script>
@@ -30,13 +30,19 @@
 
 	<!-- content -->
 	<div class="sub-main-w3">
-		<form class="login" id="mainsub" action="/show" method="post" onsubmit="return check();">
+		<form class="login" id="mainsub" action="/login" method="post" onsubmit="return check();">
 			<fieldset>
                 <p style="color:#f6e44a;text-align: center;font-size: 1.3em;" id="err">{{ errors }}</p>
-				<p class="legend">登录<i class="far fa-hand-point-down"></i></p>
+				<p class="legend">注册<i class="far fa-hand-point-down"></i></p>
 				<div class="input">
-					<input type="text" placeholder="用户名" name="useName" required minlength="4"
+					<input type="text" placeholder="用户名(长度4-8个字符)" name="useName" required minlength="4"
 						maxlength="8" />
+					<span>
+						<i class="fas fa-envelope"></i>
+					</span>
+				</div>
+				<div class="input">
+					<input type="email" id="email" placeholder="邮箱" name="email" required />
 					<span>
 						<i class="fas fa-envelope"></i>
 					</span>
@@ -48,15 +54,27 @@
 						<i class="fas fa-lock-open"></i>
 					</span>
 				</div>
+				<div class="input">
+					<input type="password" id="passwords" placeholder="再次输入密码" name="passwordAgain" required />
+					<span>
+						<i class="fas fa-lock-open"></i>
+					</span>
+				</div>
+                <div class="input">
+					<input type="text"  placeholder="验证码" name="code" required />
+					<span>
+						<i class="fas fa-lock-open"></i>
+					</span>
+				</div>
+				<button type="button" id="sendEmail" class="four"
+            style="border-style: hidden;background-color: lavender;margin-left: 155px;margin-bottom: 27px;">发送验证码</button>
+				<p  style="text-align: center;" id="text"></p>
 				<button type="submit" class="submit" style="margin-bottom: 36px;">
-					<i class="fas fa-sign-in-alt"></i>
 				</button>
-                <a href="/" style="padding-left: 125px;color: aquamarine;">没有账户，点击注册</a>
+                <a href="/login" style="padding-left: 125px;color: aquamarine;">已有账户，点击登录</a>
 			</fieldset>
 		</form>
-
 	</div>
-	<!-- //content -->
 
 	<!-- Jquery -->
 	<script src="/js/jquery-2.2.3.min.js"></script>
@@ -66,6 +84,21 @@
        if($('#err')[0].innerText === '[]'){
            document.getElementById('err').style.display = 'none'
        }
+        
+		let check = () => {
+			if (document.getElementById("password").value !== document.getElementById("passwords").value) {
+				alert("两次输入的密码不一致")
+				return false;
+			} else {
+				return true;
+			}
+		}
+
+		$('#sendEmail').on('click', () => {
+			$.post('/sendEmail', { email: $('#email')[0].value }, function (response) {
+				$('#text')[0].innerHTML = response.text
+			})
+		})
 
 		$(".input").focusin(function () {
 			$(this).find("span").animate({
@@ -77,24 +110,6 @@
 			$(this).find("span").animate({
 				"opacity": "1"
 			}, 300);
-		});
-
-		$(".login").submit(function () {
-			$(this).find(".submit i").removeAttr('class').addClass("fa fa-check").css({
-				"color": "#fff"
-			});
-			$(".submit").css({
-				"background": "#2ecc71",
-				"border-color": "#2ecc71"
-			});
-			$(".feedback").show().animate({
-				"opacity": "1",
-				"bottom": "-80px"
-			}, 400);
-			$("input").css({
-				"border-color": "#2ecc71"
-			});
-			// return false;
 		});
 	</script>
 	<!-- //script -->
