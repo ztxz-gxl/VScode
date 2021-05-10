@@ -4,7 +4,7 @@ let sql = require('./db')
 let ver = require('./verification')
 
 router.get('/', function (_req, res) {
-    res.render('index.html')
+    res.render('resg.html')
 })
 
 router.get('/login', function (_req, res) {
