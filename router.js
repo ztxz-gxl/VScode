@@ -16,7 +16,14 @@ router.get('/about', function (_req, res) {
 })
 
 router.get('/back', function (_req, res) {
-    res.render('back.html')
+    res.render('back.html',{
+        name:[""],
+        grwz: [[""],[""]]
+    })
+})
+
+router.get('/back/showMenu',function(req,res){
+    res.render('showMenu.html')
 })
 
 router.get('/beef', function (_req, res) {
@@ -48,7 +55,10 @@ router.get('/other', function (_req, res) {
 })
 
 router.get('/owen', function (_req, res) {
-    res.render('owen.html')
+    res.render('owen.html',{
+        name:[""],
+        grwz: [[""],[""]]
+    })
 })
 
 router.post('/login', function (req, res) {

@@ -68,22 +68,11 @@
                     </div>
                     <div class="navbar-collapse collapse ">
                         <ul class="nav navbar-nav">
-                            <li><a class="waves-effect waves-dark" href="/index">首页</a></li>
-                            <li class="dropdown active">
-                                <a href="#" data-toggle="dropdown"
-                                    class="dropdown-toggle waves-effect waves-dark">面食分类<b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="waves-effect waves-dark" href="/beef">牛肉面、粉</a></li>
-                                    <li><a class="waves-effect waves-dark" href="/nood">素菜配菜面、粉</a></li>
-                                    <li><a class="waves-effect waves-dark" href="/drink">饮料</a></li>
-                                    <li><a class="waves-effect waves-dark" href="/other">其他</a></li>
-                                </ul>
-                            </li>
-                            <li><a class="waves-effect waves-dark" href="/click">点单</a></li>
+                            <li><a class="waves-effect waves-dark" href="/back">首页</a></li>
 							<li><a class="waves-effect waves-dark" href="/login">登录</a></li>
 							<li><a class="waves-effect waves-dark" href="/resg">注册</a></li>
-							<li><a class="waves-effect waves-dark" href="/contact">客户反馈</a></li>
-							<li><a class="waves-effect waves-dark" href="/about">关于我们</a></li>
+                            <li><a class="waves-effect waves-dark" href="/back/showMenu">菜单</a></li>
+							<li><a class="waves-effect waves-dark" href="/back/showContact">客户反馈</a></li>
                         </ul>
                     </div>
                 </div>
@@ -118,7 +107,7 @@
                     </div>
                     {{/each}}
                 </div>
-                <div class="container">
+                <div style="padding: 0px;" class="container">
                     <div class="row">
                         {{each grwz}}
                         <div class="col-md-4">
