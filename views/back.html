@@ -72,7 +72,7 @@
 							<li><a class="waves-effect waves-dark" href="/login">登录</a></li>
 							<li><a class="waves-effect waves-dark" href="/resg">注册</a></li>
                             <li><a class="waves-effect waves-dark" href="/back/showMenu">菜单</a></li>
-							<li><a class="waves-effect waves-dark" href="/back/showContact">客户反馈</a></li>
+							
                         </ul>
                     </div>
                 </div>
@@ -97,26 +97,47 @@
         
             <div class="container">
                 <div class="row">
-                    {{each grwz}}
-                    <div class="col-md-4">
-                        <h2>历史订单</h2>
-                        <h3>订单:{{$value.bookName}}</h3>
-                        <h4>下单时间:{{$value.goodNum}}</h4>
-                        <p><a class="btn btn-default" href="/show?useID={{useID}}&bookName={{$value.bookName}}" role="button">点击查看 &raquo;</a></p>
-                        <p><a class="btn btn-default" href="/del?useID={{useID}}&bookName={{$value.bookName}}" role="button">点击删除 &raquo;</a></p>
-                    </div>
-                    {{/each}}
-                </div>
-                <div style="padding: 0px;" class="container">
-                    <div class="row">
-                        {{each grwz}}
-                        <div class="col-md-4">
-                            <h2>反馈列表</h2>
-                            <h4>反馈时间:{{$value.goodNum}}</h4>
-                            <p><a class="btn btn-default" href="/show?useID={{useID}}&bookName={{$value.bookName}}" role="button">点击查看 &raquo;</a></p>
-                            <p><a class="btn btn-default" href="/del?useID={{useID}}&bookName={{$value.bookName}}" role="button">点击删除 &raquo;</a></p>
-                        </div>
+                    <table  style="border-style: solid;color: white;">
+                        <tr>
+                            <td >序号</td>
+                            <td >订单内容</td>
+                            <td >下单时间</td>
+                            <td>操作</td>
+                        </tr>
+                        {{each massages}}
+                        <tr>
+                            <td >{{$value.id}}</td>
+                            <td>{{$value.menu}}</td>
+                            <td >{{$value.createTime}}</td>
+                            <td >
+                                <input type="button" value="详情" id="btn0" onclick="location.href='/back/show?ordID={{$value.id}}'">
+                                <input type="button" value="删除" id="btn2" onclick="location.href='/del?ordID={{$value.id}}'">
+                            </td>
+                        </tr>
                         {{/each}}
+                    </table>
+                </div>
+                <div style="padding: 0px;width: 1140px;" class="container">
+                    <div class="row">
+                        <table  style="border-style: solid;color: white;">
+                            <tr>
+                                <td >序号</td>
+                                <td >反馈内容</td>
+                                <td >提交时间</td>
+                                <td>操作</td>
+                            </tr>
+                            {{each massages}}
+                            <tr>
+                                <td >{{$value.id}}</td>
+                                <td>{{$value.feed}}</td>
+                                <td >{{$value.createTime}}</td>
+                                <td >
+                                    <input type="button" value="详情" id="btn0" onclick="location.href='/backshow?ordID={{$value.id}}'">
+                                    <input type="button" value="删除" id="btn2" onclick="location.href='/del?ordID={{$value.id}}'">
+                                </td>
+                            </tr>
+                            {{/each}}
+                        </table>
                     </div>
         </section>
         <footer style="padding: 0;">

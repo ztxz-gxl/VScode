@@ -61,6 +61,18 @@ router.get('/owen', function (_req, res) {
     })
 })
 
+router.get('/back/showFeed',function(req,res){
+    res.render('showFeed.html')
+})
+
+router.get('/back/showOrder',function(req,res){
+    res.render('showOrder.html')
+})
+
+router.get('/back/addMenu',function(req,res){
+    res.render('addMenu.html')
+})
+
 router.post('/login', function (req, res) {
     let body = req.body
     if(body.code === req.session.code){
