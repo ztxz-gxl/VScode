@@ -69,9 +69,8 @@
                     <div class="navbar-collapse collapse ">
                         <ul class="nav navbar-nav">
                             <li><a class="waves-effect waves-dark" href="/back">首页</a></li>
-							<li><a class="waves-effect waves-dark" href="/login">登录</a></li>
-							<li><a class="waves-effect waves-dark" href="/resg">注册</a></li>
-                            <li><a class="waves-effect waves-dark" href="/back/showMenu">菜单</a></li>
+							<li><a class="waves-effect waves-dark" href="/back/main">切换账号</a></li>
+                            <li><a class="waves-effect waves-dark" href="/back/showMenu?userid={{userid}}">菜单</a></li>
 							
                         </ul>
                     </div>
@@ -82,7 +81,7 @@
         <section id="inner-headline">
             <div id="bj" class="jumbotron">
                 <div class="container">
-                    <h1>Hello,{{name}}!</h1>
+                    <h1>Hello,{{useName}}!</h1>
                     <img style="width: 250px;height: 300px;" src="/img/g.jpg">
                     <form action="/upload?useID={{useID}}" method="POST" style="padding-left: 23px;"
                         enctype="multipart/form-data">
@@ -100,14 +99,12 @@
                     <table  style="border-style: solid;color: white;">
                         <tr>
                             <td >序号</td>
-                            <td >订单内容</td>
                             <td >下单时间</td>
                             <td>操作</td>
                         </tr>
-                        {{each massages}}
+                        {{each click}}
                         <tr>
                             <td >{{$value.id}}</td>
-                            <td>{{$value.menu}}</td>
                             <td >{{$value.createTime}}</td>
                             <td >
                                 <input type="button" value="详情" id="btn0" onclick="location.href='/back/show?ordID={{$value.id}}'">
@@ -126,7 +123,7 @@
                                 <td >提交时间</td>
                                 <td>操作</td>
                             </tr>
-                            {{each massages}}
+                            {{each feedback}}
                             <tr>
                                 <td >{{$value.id}}</td>
                                 <td>{{$value.feed}}</td>

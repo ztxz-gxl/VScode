@@ -30,7 +30,7 @@
 
 	<!-- content -->
 	<div class="sub-main-w3">
-		<form class="login" id="mainsub" action="/login" method="post" onsubmit="return check();">
+		<form class="login" id="mainsub" action="/back/main" method="post" onsubmit="return check();">
 			<fieldset>
                 <p style="color:#f6e44a;text-align: center;font-size: 1.3em;" id="err">{{ errors }}</p>
 				<p class="legend">注册<i class="far fa-hand-point-down"></i></p>
@@ -71,7 +71,7 @@
 				<p  style="text-align: center;" id="text"></p>
 				<button type="submit" class="submit" style="margin-bottom: 36px;">
 				</button>
-                <a href="/login" style="padding-left: 125px;color: aquamarine;">已有账户，点击登录</a>
+                <a href="/back/main" style="padding-left: 125px;color: aquamarine;">已有账户，点击登录</a>
 			</fieldset>
 		</form>
 	</div>

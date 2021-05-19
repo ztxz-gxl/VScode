@@ -5,7 +5,7 @@ let connection = mysql.createConnection({
     user: 'root',
     password: '123456',
     port: '3306',
-    database: 'demo'
+    database: 'food'
 })
 connection.connect()
 

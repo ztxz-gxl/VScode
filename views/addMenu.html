@@ -29,8 +29,7 @@
 					<div class="navbar-collapse collapse ">
 						<ul class="nav navbar-nav">
 							<li><a class="waves-effect waves-dark" href="/back">首页</a></li>
-							<li><a class="waves-effect waves-dark" href="/login">登录</a></li>
-							<li><a class="waves-effect waves-dark" href="/resg">注册</a></li>
+							<li><a class="waves-effect waves-dark" href="/back/main">切换账号</a></li>
 							<li><a class="waves-effect waves-dark" href="/back/showMenu">菜单</a></li>
 							
 						</ul>
@@ -53,18 +52,23 @@
 				<div class="row">
 					<div style="margin-left: 290px;" class="col-md-6">
 						<!-- Form itself -->
-						<form name="sentMessage" id="contactForm" action="#" novalidate>
+						<form name="sentMessage" id="contactForm" action="/back/addMenu" method="POST" novalidate>
 							<div class="input-field">
-								<input type="text" name="sort" class="form-control" required
+								<input type="text" name="soft" class="form-control" required
 									data-validation-required-message="Please enter your name" />
-								<label for="sort" class=""> 分类 </label>
-								<p class="help-block"></p>
+								<label for="soft" class=""> 分类 </label>
 
 							</div>
 							<div class="input-field">
 								<input type="text" name="MenuName" class="form-control" 
 									data-validation-required-message="Please enter your email" />
 								<label for="MenuName" class=""> 菜名 </label>
+							</div>
+
+							<div class="input-field">
+								<input type="text" name="introduce" class="form-control" 
+									data-validation-required-message="Please enter your email" />
+								<label for="introduce" class=""> 介绍 </label>
 							</div>
 
 							<div class="input-field">
