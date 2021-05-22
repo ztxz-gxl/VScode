@@ -54,6 +54,13 @@
         #bj{
             background: url(img/slides/3.jpg);
         }
+        #btn0,#btn2{
+            background-color: darkorange;
+            border: none;
+        }
+        #tab td{
+            text-align: center;
+        }
     </style>
 </head>
 
@@ -96,19 +103,20 @@
         
             <div class="container">
                 <div class="row">
-                    <table  style="border-style: solid;color: white;">
+                    <p style="text-align: center;font-size: 2em;color: black;">订单</p>
+                    <table  id="tab" style="border-style: solid;color: white;">
                         <tr>
                             <td >序号</td>
-                            <td >下单时间</td>
+                            <td>处理情况(0为未处理,1为已处理)</td>
                             <td>操作</td>
                         </tr>
                         {{each click}}
                         <tr>
-                            <td >{{$value.id}}</td>
-                            <td >{{$value.createTime}}</td>
+                            <td >{{$value.clickID}}</td>
+                            <td>{{$value.states}}</td>
                             <td >
-                                <input type="button" value="详情" id="btn0" onclick="location.href='/back/show?ordID={{$value.id}}'">
-                                <input type="button" value="删除" id="btn2" onclick="location.href='/del?ordID={{$value.id}}'">
+                                <input type="button" value="详情" id="btn0" onclick="location.href='/back/show?ordID={{$value.clickID}}'">
+                                <input type="button" value="删除" id="btn2" onclick="location.href='/del?ordID={{$value.clickID}}'">
                             </td>
                         </tr>
                         {{/each}}
@@ -116,7 +124,8 @@
                 </div>
                 <div style="padding: 0px;width: 1140px;" class="container">
                     <div class="row">
-                        <table  style="border-style: solid;color: white;">
+                        <p style="text-align: center;font-size: 2em;color: black;">反馈</p>
+                        <table id="tab" style="border-style: solid;color: white;">
                             <tr>
                                 <td >序号</td>
                                 <td >反馈内容</td>

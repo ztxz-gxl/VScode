@@ -191,85 +191,53 @@ router.post('/login', function (req, res) {
                 })
             } else {
                 req.flash('error', '该用户已存在')
-                res.redirect('/')
+                res.redirect('/resg')
             }
         })
     } else {
         req.flash('error', '验证码错误')
-        res.redirect('/')
+        res.redirect('/resg')
     }
 })
 
-// router.post('/show', function (req, res) {
-//     let body = req.body
-//     let sqlStr = 'SELECT * FROM demo '
-//     sql.Select(sqlStr, function (err, result) {
-//         if (err) {
-//             console.log('[SELECT ERROR] - ', err.message)
-//             return
-//         }
-//         let ok = false
-//         for(i of result){
-//             if (i.useName === body.userName && i.name === body.name && i.password === body.password) {
-//                 ok = true
-//                 break
-//             } else {
-//                 ok = false
-//             }
-//         }
-//         if (ok) {
-//             res.render('show.html', {
-//                 userName: body.userName,
-//                 name: body.name,
-//                 password: body.password
-//             })
-//         } else {
-//             res.setHeader('Content-Type', 'text/HTML;charset=utf-8')
-//             res.end('<h1><a href = "/login">输入信息有误!点击重新登录</a></h1>')
-//         }
-//     })
-// })
-
 router.post('/back/main', function (req, res) {
     let body = req.body
-    if (body.code === req.session.code) {
-        let sqlStr = 'SELECT * FROM seller '
-        sql.Select(sqlStr, function (err, result) {
-            if (err) {
-                console.log('[SELECT ERROR] - ', err.message)
-                return
-            }
-            let ok = false
-            for (i of result) {
-                if (i.useName === body.useName && i.name === body.name) {
-                    ok = false
-                    break
-                } else {
-                    ok = true
-                }
-
-            }
-            if (ok) {
-                let md5 = crypto.createHash('md5')
-                let time = sd.format(new Date(), 'YYYY-MM-DD HH:mm:ss')
-                let addSql = 'INSERT INTO seller(useName,password,addr,num,createTime) VALUES(?,?,?,?,?)'
-                let addSqlParams = [body.useName, md5.update(body.password).digest('hex'), body.addr, body.num, time]
-                sql.Insert(addSql, addSqlParams, function (err) {
-                    if (err) {
-                        console.log('[INSERT ERROR] - ', err.message)
-                        return
-                    }
-                    res.render('backLogin.html')
-                })
+    let sqlStr = 'SELECT * FROM seller '
+    sql.Select(sqlStr, function (err, result) {
+        if (err) {
+            console.log('[SELECT ERROR] - ', err.message)
+            return
+        }
+        let ok = false
+        if(Array.from(result).length === 0){
+            ok = true
+        }
+        for (i of result) {
+            if (i.useName === body.useName && i.name === body.name) {
+                ok = false
+                break
             } else {
-                req.flash('error', '该用户已存在')
-                res.redirect('/')
+                ok = true
             }
-        })
-    } else {
-        req.flash('error', '验证码错误')
-        res.redirect('/')
-    }
+
+        }
+        if (ok) {
+            let md5 = crypto.createHash('md5')
+            let time = sd.format(new Date(), 'YYYY-MM-DD HH:mm:ss')
+            let addSql = 'INSERT INTO seller(useName,password,addr,num,createTime) VALUES(?,?,?,?,?)'
+            let addSqlParams = [body.useName, md5.update(body.password).digest('hex'), body.addr, body.num, time]
+            sql.Insert(addSql, addSqlParams, function (err) {
+                if (err) {
+                    console.log('[INSERT ERROR] - ', err.message)
+                    return
+                }
+                res.render('backLogin.html')
+            })
+        } else {
+            req.flash('error', '该用户已存在')
+            res.redirect('/back/resg')
+        }
+    })
 })
 
 router.post('/back', function (req, res) {
@@ -280,10 +248,10 @@ router.post('/back', function (req, res) {
             console.log('[SELECT ERROR] - ', err.message)
             return
         }
-        let ok = false
         let md5 = crypto.createHash('md5')
+        let ok = false
         for (i of result) {
-            if (i.useName === body.userName && i.password === md5.update(body.password).digest('hex')) {
+            if (i.useName === body.useName && i.password === md5.update(body.password).digest('hex')) {
                 ok = true
                 break
             } else {
@@ -291,26 +259,35 @@ router.post('/back', function (req, res) {
             }
         }
         if (ok) {
-            sql.Selects('SELECT id FROM seller WHERE useName = ?,password = ?', [body.userName, md5.update(body.password).digest('hex')], function (err, result1) {
+            sql.Selects('SELECT id FROM seller WHERE useName = ?', body.useName, function (err, result1) {
                 if (err) {
                     console.log(err);
                     return
                 }
-                sql.Select('SELECT c.clickID,CONCAT(m.menuName,' + x + ',c.num) menu,c.createTime FROM click  c INNER JOIN menu m onc.menu_id = m.id', function (err, result2) {
+                sql.Select('SELECT DISTINCT clickID,states FROM click ', function (err, result2) {
                     if (err) {
                         console.log(err);
                         return
+
                     }
-                    res.render('back.html', {
-                        userid = result1[0].id,
-                        
+                    sql.Select('SELECT * FROM feedback', function (err, result3) {
+                        if (err) {
+                            console.log(err);
+                            return
+
+                        }
+                        res.render('back.html', {
+                            userid : result1[0].id,
+                            click: result2,
+                            feedback: result3
+                        })
                     })
                 })
 
             })
         } else {
-            res.setHeader('Content-Type', 'text/HTML;charset=utf-8')
-            res.end('<h1><a href = "/login">输入信息有误!点击重新登录</a></h1>')
+            req.flash('error', '登录信息有误')
+            res.redirect('/back/main')
         }
     })
 })
