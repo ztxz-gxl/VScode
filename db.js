@@ -19,7 +19,7 @@ exports.Insert = function (sqlStr, addsql, callback) {
 }
 
 exports.Delete = function (id, tab_nanme, callback) {
-    connection.query("DETELE FROM " + tab_nanme + "WHERE id = ?", id, function (err, _result) {
+    connection.query("DELETE FROM " + tab_nanme + " WHERE id = ?", parseInt(id), function (err, _result) {
         if (err) {
             return callback(err)
         }

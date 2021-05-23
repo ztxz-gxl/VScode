@@ -1,6 +1,8 @@
 let express = require('express')
 let sd = require('silly-datetime')
 let crypto = require('crypto')
+let fs = require('fs')
+let Formidable = require('formidable')
 let router = express.Router()
 let sql = require('./db')
 let ver = require('./verification')
@@ -25,10 +27,34 @@ router.get('/back/resg', function (_req, res) {
     res.render('backResg.html')
 })
 
-router.get('/back', function (_req, res) {
-    res.render('back.html', {
-        name: [""],
-        grwz: [[""], [""]]
+router.get('/back', function (req, res) {
+    sql.Selects('SELECT useName,imgAddr FROM seller WHERE id = ?', req.query.userid, function (err, result) {
+        if (err) {
+            console.log(err);
+            return
+
+        }
+        sql.Select('SELECT DISTINCT clickID,states FROM click ', function (err, result2) {
+            if (err) {
+                console.log(err);
+                return
+
+            }
+            sql.Select('SELECT * FROM feedback', function (err, result3) {
+                if (err) {
+                    console.log(err);
+                    return
+
+                }
+                res.render('back.html', {
+                    userid: req.query.userid,
+                    imgAddr: result[0].imgAddr,
+                    useName: result[0].useName,
+                    click: result2,
+                    feedback: result3
+                })
+            })
+        })
     })
 })
 
@@ -55,6 +81,7 @@ router.get('/back/showMenu', function (req, res) {
             newArray[1] = newArray[1].concat(newArray[3][1])
         }
         res.render('showMenu.html', {
+            userid: req.query.userid,
             menu1: newArray[0],
             menu2: newArray[1],
             menu3: newArray[2]
@@ -116,6 +143,7 @@ router.get('/back/upMenu', function (req, res) {
             return
         }
         res.render('upMenu.html', {
+            userid: req.query.userid,
             id: result[0].id,
             soft: result[0].soft,
             menuName: result[0].menuName,
@@ -131,7 +159,7 @@ router.get('/back/delMenu', function (req, res) {
             console.log('delete is faild' + err)
             return
         }
-        res.redirect('/back/showMenu')
+        res.redirect('/back/showMenu?userid=' + req.query.userid)
     })
 })
 
@@ -142,7 +170,7 @@ router.post('/back/addMenu', function (req, res) {
             console.log('insert is fail' + err);
             return
         }
-        res.redirect('/back')
+        res.redirect('/back?userid=' + req.query.userid)
     })
 })
 
@@ -154,8 +182,25 @@ router.post('/back/upMenu', function (req, res) {
                 console.log('update is faild' + err);
                 return
             }
-            res.redirect('/back/showMenu')
+            res.redirect('/back/showMenu?userid=' + req.query.userid)
         })
+})
+
+router.post('/back/upload', function (req, res) {
+    let form = new Formidable.IncomingForm()
+    form.parse(req, function (err, fields, files) {
+        let tempPath = files.file.path
+        let rs = fs.createReadStream(tempPath)
+        let ws = fs.createWriteStream('./public/img/' + files.file.name)
+        rs.pipe(ws)
+        sql.Update('UPDATE seller SET imgAddr = ? WHERE id = ?', [files.file.name, req.query.userid], function (err) {
+            if (err) {
+                console.log('[UPDATE ERROR] - ', err.message)
+                return
+            }
+            res.redirect('/back?userid=' + req.query.userid)
+        })
+    })
 })
 
 router.post('/login', function (req, res) {
@@ -167,7 +212,6 @@ router.post('/login', function (req, res) {
                 console.log('[SELECT ERROR] - ', err.message)
                 return
             }
-            // res.send(result)
             let ok = false
             for (i of result) {
                 if (i.useName === body.useName && i.name === body.name) {
@@ -209,7 +253,7 @@ router.post('/back/main', function (req, res) {
             return
         }
         let ok = false
-        if(Array.from(result).length === 0){
+        if (Array.from(result).length === 0) {
             ok = true
         }
         for (i of result) {
@@ -259,7 +303,7 @@ router.post('/back', function (req, res) {
             }
         }
         if (ok) {
-            sql.Selects('SELECT id FROM seller WHERE useName = ?', body.useName, function (err, result1) {
+            sql.Selects('SELECT id,imgAddr FROM seller WHERE useName = ?', body.useName, function (err, result1) {
                 if (err) {
                     console.log(err);
                     return
@@ -277,7 +321,9 @@ router.post('/back', function (req, res) {
 
                         }
                         res.render('back.html', {
-                            userid : result1[0].id,
+                            userid: result1[0].id,
+                            imgAddr: result[0].imgAddr,
+                            useName: body.useName,
                             click: result2,
                             feedback: result3
                         })

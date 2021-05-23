@@ -75,7 +75,7 @@
                     </div>
                     <div class="navbar-collapse collapse ">
                         <ul class="nav navbar-nav">
-                            <li><a class="waves-effect waves-dark" href="/back">首页</a></li>
+                            <li><a class="waves-effect waves-dark" href="/back?userid={{userid}}">首页</a></li>
 							<li><a class="waves-effect waves-dark" href="/back/main">切换账号</a></li>
                             <li><a class="waves-effect waves-dark" href="/back/showMenu?userid={{userid}}">菜单</a></li>
 							
@@ -89,8 +89,8 @@
             <div id="bj" class="jumbotron">
                 <div class="container">
                     <h1>Hello,{{useName}}!</h1>
-                    <img style="width: 250px;height: 300px;" src="/img/g.jpg">
-                    <form action="/upload?useID={{useID}}" method="POST" style="padding-left: 23px;"
+                    <img style="width: 250px;height: 300px;" src="/img/{{imgAddr}}">
+                    <form action="/back/upload?userid={{userid}}" method="POST" style="padding-left: 23px;"
                         enctype="multipart/form-data">
                         <a href="javascript:void(0)" class="file">选择头像
                             <input id="add1" type="file" value="请选择头像" name="file">
@@ -121,6 +121,8 @@
                         </tr>
                         {{/each}}
                     </table>
+                    <p style="text-align: center;border-style: solid;border-color: #9e9e9ead;background-color: #9e9e9ead;
+                        color: wheat;">点击查看更多</p>
                 </div>
                 <div style="padding: 0px;width: 1140px;" class="container">
                     <div class="row">
@@ -144,6 +146,8 @@
                             </tr>
                             {{/each}}
                         </table>
+                        <p style="text-align: center;border-style: solid;border-color: #9e9e9ead;background-color: #9e9e9ead;
+                        color: wheat;">点击查看更多</p>
                     </div>
         </section>
         <footer style="padding: 0;">
