@@ -52,7 +52,7 @@
             text-decoration-line: none;
         }
         #bj{
-            background: url(/img/slides/3.jpg);
+            background: url(img/3.jpg);
         }
         #btn0,#btn2{
             background-color: darkorange;
@@ -88,69 +88,18 @@
         <section id="inner-headline">
             <div id="bj" class="jumbotron">
                 <div class="container">
-                    <h1>Hello,{{useName}}!</h1>
-                    <img style="width: 250px;height: 300px;" src="/img/{{imgAddr}}">
-                    <form action="/back/upload?userid={{userid}}" method="POST" style="padding-left: 23px;"
+                    <img style="width: 250px;height: 300px;" src="/img/{{imgUrl}}">
+                    <form action="/back/upImg?id={{id}}&userid={{userid}}" method="POST" style="padding-left: 23px;"
                         enctype="multipart/form-data">
-                        <a href="javascript:void(0)" class="file">选择头像
-                            <input id="add1" type="file" value="请选择头像" name="file">
+                        <a href="javascript:void(0)" class="file">选择图片
+                            <input id="add1" type="file" value="请选择图片" name="file">
                         </a>
                         <input style="color:white;font-size: 1.4em;width: 95px;padding-top: 0;
-                        height: 47px;background: #204d74;border-style: hidden;"type="submit" value="上传头像">
+                        height: 47px;background: #204d74;border-style: hidden;"type="submit" value="上传图片">
                     </form>
                 </div>
             </div>
-        
-            <div class="container">
-                <div class="row">
-                    <p style="text-align: center;font-size: 2em;color: black;">订单</p>
-                    <table  id="tab" style="border-style: solid;color: white;">
-                        <tr>
-                            <td >订单号</td>
-                            <td>订单</td>
-                            <td>处理情况(0为未处理,1为已处理)</td>
-                            <td>操作</td>
-                        </tr>
-                        {{each click}}
-                        <tr>
-                            <td >{{$value.id}}</td>
-                            <td >{{$value.order}}</td>
-                            <td>{{$value.states}}</td>
-                            <td >
-                                <input type="button" value="详情" id="btn0" onclick="location.href='/back/showOrder?orderID={{$value.id}}&userid={{userid}}'">
-                                <input type="button" value="删除" id="btn2" onclick="location.href='/back/del?orderID={{$value.id}}&userid={{userid}}'">
-                            </td>
-                        </tr>
-                        {{/each}}
-                    </table>
-                    <p id="orderMore1" style="text-align: center;border-style: solid;border-color: #9e9e9ead;background-color: #9e9e9ead;
-                        color: wheat;">点击查看更多</p>
-                </div>
-                <div style="padding: 0px;width: 1140px;" class="container">
-                    <div class="row">
-                        <p style="text-align: center;font-size: 2em;color: black;">反馈</p>
-                        <table id="tab" style="border-style: solid;color: white;">
-                            <tr>
-                                <td >序号</td>
-                                <td >反馈内容</td>
-                                <td >提交时间</td>
-                                <td>操作</td>
-                            </tr>
-                            {{each feedback}}
-                            <tr>
-                                <td >{{$value.id}}</td>
-                                <td>{{$value.feed}}</td>
-                                <td >{{$value.createTime}}</td>
-                                <td >
-                                    <input type="button" value="详情" id="btn0" onclick="location.href='/back/showFeed?ID={{$value.id}}&userid={{userid}}'">
-                                    <input type="button" value="删除" id="btn2" onclick="location.href='/back/delFeed?ID={{$value.id}}&userid={{userid}}'">
-                                </td>
-                            </tr>
-                            {{/each}}
-                        </table>
-                        <p id="orderMore2" style="text-align: center;border-style: solid;border-color: #9e9e9ead;background-color: #9e9e9ead;
-                        color: wheat;">点击查看更多</p>
-                    </div>
+              
         </section>
         <footer style="padding: 0;">
             <div id="sub-footer">

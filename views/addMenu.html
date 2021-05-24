@@ -15,6 +15,39 @@
 	<link href="/css/flexslider.css" rel="stylesheet" />
 	<link href="/css/style.css" rel="stylesheet" />
 
+	<style>
+		.file {
+            position: relative;
+            display: inline-block;
+            background: #204d74;
+            color: white;
+            text-decoration: none;
+            text-indent: 0;
+            line-height: 20px;
+            font-size: 21px;
+            height: 47px;
+            padding-bottom: 0px;
+            border-top-width: 0px;
+            padding-top: 12px;
+            width: 95px;
+            text-align: center;
+        }
+
+        .file input {
+            position: absolute;
+            font-size: 100px;
+            right: 0;
+            top: 0;
+            opacity: 0;
+            width: 95px;
+            height: 47px;
+        }
+
+        .file:hover {
+            color: white;
+            text-decoration-line: none;
+        }
+	</style>
 </head>
 
 <body>
@@ -52,7 +85,7 @@
 				<div class="row">
 					<div style="margin-left: 290px;" class="col-md-6">
 						<!-- Form itself -->
-						<form name="sentMessage" id="contactForm" action="/back/addMenu" method="POST" novalidate>
+						<form name="sentMessage" id="contactForm" action="/back/addMenu" method="POST"  novalidate>
 							<div class="input-field">
 								<input type="text" name="soft" class="form-control" required
 									data-validation-required-message="Please enter your name" />

@@ -14,6 +14,8 @@
     <link href="/css/fancybox/jquery.fancybox.css" rel="stylesheet">
     <link href="/css/flexslider.css" rel="stylesheet" />
     <link href="/css/style.css" rel="stylesheet" />
+    <link href="/css/gallery-1.css" rel="stylesheet">
+    <link href="/css/magnific-popup.css" rel="stylesheet"> 
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -32,22 +34,20 @@
                     </div>
                     <div class="navbar-collapse collapse ">
                         <ul class="nav navbar-nav">
-                            <li><a class="waves-effect waves-dark" href="/index">首页</a></li>
+                            <li><a class="waves-effect waves-dark" href="/index?userid={{userid}}">首页</a></li>
                             <li class="dropdown active">
-                                <a href="#" data-toggle="dropdown"
-                                    class="dropdown-toggle waves-effect waves-dark">面食分类<b class="caret"></b></a>
+                                <a href="#" data-toggle="dropdown" class="dropdown-toggle waves-effect waves-dark">面食分类<b class="caret"></b></a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="waves-effect waves-dark" href="/beef">牛肉面、粉</a></li>
-                                    <li><a class="waves-effect waves-dark" href="/nood">素菜配菜面、粉</a></li>
-                                    <li><a class="waves-effect waves-dark" href="/drink">饮料</a></li>
-                                    <li><a class="waves-effect waves-dark" href="/other">其他</a></li>
+                                    <li><a class="waves-effect waves-dark" href="/beef?userid={{userid}}">牛肉面、粉</a></li>
+                                    <li><a class="waves-effect waves-dark" href="/nood?userid={{userid}}">素菜配菜面、粉</a></li>
+                                    <li><a class="waves-effect waves-dark" href="/drink?userid={{userid}}">饮料</a></li>
+                                    <li><a class="waves-effect waves-dark" href="/other?userid={{userid}}">其他</a></li>
                                 </ul>
                             </li>
-                            <li><a class="waves-effect waves-dark" href="/click">点单</a></li>
-							<li><a class="waves-effect waves-dark" href="/login">登录</a></li>
-							<li><a class="waves-effect waves-dark" href="/resg">注册</a></li>
-							<li><a class="waves-effect waves-dark" href="/contact">客户反馈</a></li>
-							<li><a class="waves-effect waves-dark" href="/about">关于我们</a></li>
+                            <li><a class="waves-effect waves-dark" href="/click?userid={{userid}}">点单</a></li>
+                            <li><a class="waves-effect waves-dark" href="/login">切换账号</a></li>
+                            <li><a class="waves-effect waves-dark" href="/owen?userid={{userid}}">个人中心</a></li>
+                            <li><a class="waves-effect waves-dark" href="/contact?userid={{userid}}">客户反馈</a></li>
                         </ul>
                     </div>
                 </div>
@@ -64,8 +64,7 @@
                 </div>
             </div>
         </section>
-        <section id="content">
-            <section id="pricing">
+        <section id="dishes">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
@@ -76,97 +75,31 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-4 menuItem">
-                            <ul class="menu">
-                                <li>
-                                    Kemts
-                                    <div class="detail">ipsum dolor sit amet, consectetur<span
-                                            class="price">$14.49</span></div>
-                                </li>
-                                <li>
-                                    Burger Flatj king
-                                    <div class="detail">ipsum dolor sit amet dskfj consectetur<span
-                                            class="price">$20.50</span></div>
-                                </li>
-                                <li>
-                                    England Muntes Vils
-                                    <div class="detail">Semper aliquam quis mattis quam<span class="price">$9.99</span>
+                    <div class="row service-v1 margin-bottom-40">
+                        {{each showMenu}}
+                        <div class="col-md-4 col-sm-6 col-xs-12 gallery-item-wrapper artwork creative">
+                            <div class="gallery-item">
+                                <div class="gallery-thumb">
+                                    <img src="/img/{{$value.imgUrl}}" class="img-responsive" alt="1st gallery Thumb">
+                                    <div class="image-overlay"></div>
+                                    <a href="/img/{{$value.imgUrl}}" class="gallery-zoom"><i class="fa fa-eye"></i></a>
+                                    
+                                </div>
+                                <div class="gallery-details">
+                                    <div class="editContent">
+                                        <h5>{{$value.menuName}}</h5>
                                     </div>
-                                </li>
-                                <li>
-                                    Jemnku Qubeics
-                                    <div class="detail">ipsum dolor sit amet, consectetur<span
-                                            class="price">$7.99</span></div>
-                                </li>
-                                <li>
-                                    Trenslinks
-                                    <div class="detail">ipsum dolor sit amet dskfj consectetur<span
-                                            class="price">$17.99</span></div>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="col-md-4 menuItem">
-                            <ul class="menu">
-                                <li>
-                                    Ddsaw
-                                    <div class="detail">ipsum dolor sit amet, consectetur<span
-                                            class="price">$14.49</span></div>
-                                </li>
-                                <li>
-                                    Awdass ads
-                                    <div class="detail">ipsum dolor sit amet dskfj consectetur<span
-                                            class="price">$20.50</span></div>
-                                </li>
-                                <li>
-                                    Efdsf Vdssad
-                                    <div class="detail">Semper aliquam quis mattis quam<span class="price">$9.99</span>
+                                    <div class="editContent">
+                                        <p>
+                                            {{$value.introduce}}
+                                        </p>
                                     </div>
-                                </li>
-                                <li>
-                                    Dasdada asda
-                                    <div class="detail">ipsum dolor sit amet, consectetur<span
-                                            class="price">$7.99</span></div>
-                                </li>
-                                <li>
-                                    Esadcasd
-                                    <div class="detail">ipsum dolor sit amet dskfj consectetur<span
-                                            class="price">$17.99</span></div>
-                                </li>
-                            </ul>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-md-4 menuItem">
-                            <ul class="menu">
-                                <li>
-                                    Qsadasd
-                                    <div class="detail">ipsum dolor sit amet, consectetur<span
-                                            class="price">$14.49</span></div>
-                                </li>
-                                <li>
-                                    Fsdaasd
-                                    <div class="detail">ipsum dolor sit amet dskfj consectetur<span
-                                            class="price">$20.50</span></div>
-                                </li>
-                                <li>
-                                    Vsdasd asda
-                                    <div class="detail">Semper aliquam quis mattis quam<span class="price">$9.99</span>
-                                    </div>
-                                </li>
-                                <li>
-                                    Wasdads asd
-                                    <div class="detail">ipsum dolor sit amet, consectetur<span
-                                            class="price">$7.99</span></div>
-                                </li>
-                                <li>
-                                    Delmonico
-                                    <div class="detail">ipsum dolor sit amet dskfj consectetur<span
-                                            class="price">$17.99</span></div>
-                                </li>
-                            </ul>
-                        </div>
+                        {{/each}}
                     </div>
                 </div>
-            </section>
         </section>
         <footer style="padding: 0;">
             <div id="sub-footer">

@@ -68,22 +68,20 @@
                     </div>
                     <div class="navbar-collapse collapse ">
                         <ul class="nav navbar-nav">
-                            <li><a class="waves-effect waves-dark" href="/index">首页</a></li>
+                            <li><a class="waves-effect waves-dark" href="/index?userid={{userid}}">首页</a></li>
                             <li class="dropdown active">
-                                <a href="#" data-toggle="dropdown"
-                                    class="dropdown-toggle waves-effect waves-dark">面食分类<b class="caret"></b></a>
+                                <a href="#" data-toggle="dropdown" class="dropdown-toggle waves-effect waves-dark">面食分类<b class="caret"></b></a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="waves-effect waves-dark" href="/beef">牛肉面、粉</a></li>
-                                    <li><a class="waves-effect waves-dark" href="/nood">素菜配菜面、粉</a></li>
-                                    <li><a class="waves-effect waves-dark" href="/drink">饮料</a></li>
-                                    <li><a class="waves-effect waves-dark" href="/other">其他</a></li>
+                                    <li><a class="waves-effect waves-dark" href="/beef?userid={{userid}}">牛肉面、粉</a></li>
+                                    <li><a class="waves-effect waves-dark" href="/nood?userid={{userid}}">素菜配菜面、粉</a></li>
+                                    <li><a class="waves-effect waves-dark" href="/drink?userid={{userid}}">饮料</a></li>
+                                    <li><a class="waves-effect waves-dark" href="/other?userid={{userid}}">其他</a></li>
                                 </ul>
                             </li>
-                            <li><a class="waves-effect waves-dark" href="/click">点单</a></li>
-							<li><a class="waves-effect waves-dark" href="/login">登录</a></li>
-							<li><a class="waves-effect waves-dark" href="/resg">注册</a></li>
-							<li><a class="waves-effect waves-dark" href="/contact">客户反馈</a></li>
-							<li><a class="waves-effect waves-dark" href="/about">关于我们</a></li>
+                            <li><a class="waves-effect waves-dark" href="/click?userid={{userid}}">点单</a></li>
+                            <li><a class="waves-effect waves-dark" href="/login">切换账号</a></li>
+                            <li><a class="waves-effect waves-dark" href="/owen?userid={{userid}}">个人中心</a></li>
+                            <li><a class="waves-effect waves-dark" href="/contact?userid={{userid}}">客户反馈</a></li>
                         </ul>
                     </div>
                 </div>
@@ -94,7 +92,7 @@
             <div id="bj" class="jumbotron">
                 <div class="container">
                     <h1>Hello,{{name}}!</h1>
-                    <img style="width: 250px;height: 300px;" src="/img/g.jpg">
+                    <img style="width: 250px;height: 300px;" src="/img/{{imgAddr}}">
                     <form action="/upload?useID={{useID}}" method="POST" style="padding-left: 23px;"
                         enctype="multipart/form-data">
                         <a href="javascript:void(0)" class="file">选择头像
@@ -111,10 +109,10 @@
                     {{each grwz}}
                     <div class="col-md-4">
                         <h2>历史订单</h2>
-                        <h3>订单:{{$value.bookName}}</h3>
-                        <h4>下单时间:{{$value.goodNum}}</h4>
-                        <p><a class="btn btn-default" href="/show?useID={{useID}}&bookName={{$value.bookName}}" role="button">点击查看 &raquo;</a></p>
-                        <p><a class="btn btn-default" href="/del?useID={{useID}}&bookName={{$value.bookName}}" role="button">点击删除 &raquo;</a></p>
+                        <h3>订单:{{$value.order}}</h3>
+                        <h4>下单时间:{{$value.createTime}}</h4>
+                        <p><a class="btn btn-default" href="/showOrderMain?userid={{userid}}&orderID={{$value.id}}" role="button">点击查看 &raquo;</a></p>
+                        <p><a class="btn btn-default" href="/del?userid={{userid}}&orderID={{$value.id}}" role="button">点击删除 &raquo;</a></p>
                     </div>
                     {{/each}}
                 </div>

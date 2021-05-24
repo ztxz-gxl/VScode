@@ -51,19 +51,24 @@
 			<div class="container">
 				<div class="row">
 					<div style="margin-left: 290px;" class="col-md-6">
-							<div class="input-field">
-								<p class="help-block"> 订单内容 <p>
-								<p class="help-block"></p>
+						<div class="input-field">
+							<p class="help-block"> 订单内容 <p>
+							<p class="help-block">{{order}}</p>
+							<HR style="FILTER: alpha(opacity=100,finishopacity=0,style=3);border-top: 3px solid black;" width="100%" color=black SIZE=3>
+						</div>
+						<div class="input-field">
+							<p class="help-block"> 下单时间 <p>
+								<p class="help-block">{{createTime}}</p>
 								<HR style="FILTER: alpha(opacity=100,finishopacity=0,style=3);border-top: 3px solid black;" width="100%" color=black SIZE=3>
-							</div>
-							<div class="input-field">
-								<p class="help-block"> 下单时间 <p>
-									<p class="help-block"></p>
-									<HR style="FILTER: alpha(opacity=100,finishopacity=0,style=3);border-top: 3px solid black;" width="100%" color=black SIZE=3>
-							</div>
-							<button type="button"
-								class="btn btn-primary waves-effect waves-dark pull-right">删除</button><br />
-					</div>
+						</div>
+						<div class="input-field">
+							<p class="help-block"> 总计 <p>
+								<p class="help-block">{{all}}元</p>
+								<HR style="FILTER: alpha(opacity=100,finishopacity=0,style=3);border-top: 3px solid black;" width="100%" color=black SIZE=3>
+						</div>
+						<button type="button"
+							class="btn btn-primary waves-effect waves-dark pull-right" onclick="location.href='/back/del?userid={{userid}}&orderID={{id}}'">删除</button><br />
+				</div>
 				</div>
 			</div>
 
