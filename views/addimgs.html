@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>客户反馈详情</title>
+	<title>修改图片</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta name="description" content="" />
 	<meta name="author" content="http://cssmoban.com" />
@@ -14,6 +14,39 @@
 	<link href="/css/fancybox/jquery.fancybox.css" rel="stylesheet">
 	<link href="/css/flexslider.css" rel="stylesheet" />
 	<link href="/css/style.css" rel="stylesheet" />
+	<style>
+        .file {
+            position: relative;
+            display: inline-block;
+            background: #204d74;
+            color: white;
+            text-decoration: none;
+            text-indent: 0;
+            line-height: 20px;
+            font-size: 21px;
+            height: 47px;
+            padding-bottom: 0px;
+            border-top-width: 0px;
+            padding-top: 12px;
+            width: 95px;
+            text-align: center;
+        }
+
+        .file input {
+            position: absolute;
+            font-size: 100px;
+            right: 0;
+            top: 0;
+            opacity: 0;
+            width: 95px;
+            height: 47px;
+        }
+
+        .file:hover {
+            color: white;
+            text-decoration-line: none;
+        }
+    </style>
 
 </head>
 
@@ -41,7 +74,7 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-12">
-						<h2 class="pageTitle">查看反馈</h2>
+						<h2 class="pageTitle">查看订单</h2>
 					</div>
 				</div>
 			</div>
@@ -51,26 +84,39 @@
 			<div class="container">
 				<div class="row">
 					<div style="margin-left: 290px;" class="col-md-6">
-							<div class="input-field">
-								<p class="help-block"> 反馈内容 <p>
-								<p class="help-block">{{feed}}</p>
-								<HR style="FILTER: alpha(opacity=100,finishopacity=0,style=3);border-top: 3px solid black;" width="100%" color=black SIZE=3>
-							</div>
-							<div class="input-field">
-								<p class="help-block"> 反馈时间 <p>
-									<p class="help-block">{{createTime}}</p>
-									<HR style="FILTER: alpha(opacity=100,finishopacity=0,style=3);border-top: 3px solid black;" width="100%" color=black SIZE=3>
-							</div>
-							<div class="input-field">
-								<p class="help-block"> 联系方式 <p>
-									<p class="help-block">电话:{{phone}}<br>
-                                                          邮箱:{{email}}
-									</p>
-									<HR style="FILTER: alpha(opacity=100,finishopacity=0,style=3);border-top: 3px solid black;" width="100%" color=black SIZE=3>
-							</div>
-							<button type="button"
-								class="btn btn-primary waves-effect waves-dark pull-right" onclick="location.href='/back/delFeed?ID={{id}}&userid={{userid}}'" >删除</button><br />
-					</div>
+						<img style="width: 355px;height: 268px;" src="/img/{{imgUrl}}">
+                    <form action="/back/upImg?id={{id}}&userid={{userid}}" method="POST" 
+                        enctype="multipart/form-data" style="margin-bottom: 20px;">
+                        <a href="javascript:void(0)" class="file">选择图片
+                            <input id="add1" type="file" value="请选择图片" name="file">
+                        </a>
+                        <input style="color:white;font-size: 1.4em;width: 95px;padding-top: 0;
+                        height: 47px;background: #204d74;border-style: hidden;"type="submit" value="上传图片">
+                    </form>
+						<div class="input-field">
+							<input type="text" name="soft" class="form-control" required value="{{soft}}"
+								data-validation-required-message="Please enter your name" />
+							<label for="soft" class=""> 分类 </label>
+
+						</div>
+						<div class="input-field">
+							<input type="text" name="MenuName" class="form-control"  value="{{menuName}}"
+								data-validation-required-message="Please enter your email" />
+							<label for="MenuName" class=""> 菜名 </label>
+						</div>
+
+						<div class="input-field">
+							<input type="text" name="introduce" class="form-control"  value="{{introduce}}"
+								data-validation-required-message="Please enter your email" />
+							<label for="introduce" class=""> 介绍 </label>
+						</div>
+
+						<div class="input-field">
+							<input type="text" name="price" class="form-control"  value="{{price}}"
+								data-validation-required-message="Please enter your email" />
+							<label for="price" class=""> 价格 </label>
+						</div>
+				</div>
 				</div>
 			</div>
 

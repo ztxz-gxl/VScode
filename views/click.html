@@ -31,7 +31,7 @@
             color: white;
         }
 
-        #jians {
+        .jians {
             font-size: 1.5em;
             text-decoration: none;
             color: white;
@@ -110,7 +110,7 @@
                                     {{$value.menuName}}
                                     <div class="detail">{{$value.introduce}}<span class="price">￥{{$value.price}}</span>
                                     </div>
-                                    <div id="zhuj"><a id="jians" >-</a>
+                                    <div id="zhuj"><a class="jians" >-</a>
                                         <p class="shul">已添加</p>
                                         <p class="shul num" id="{{$value.id}}">0</p><a class="tianj" >+</a>
                                     </div>
@@ -125,7 +125,7 @@
                                     {{$value.menuName}}
                                     <div class="detail">{{$value.introduce}}<span class="price">￥{{$value.price}}</span>
                                     </div>
-                                    <div id="zhuj"><a id="jians" >-</a>
+                                    <div id="zhuj"><a class="jians" >-</a>
                                         <p class="shul">已添加</p>
                                         <p class="shul num" id="{{$value.id}}">0</p><a class="tianj" >+</a>
                                     </div>
@@ -141,7 +141,7 @@
                                     {{$value.menuName}}
                                     <div class="detail">{{$value.introduce}}<span class="price">￥{{$value.price}}</span>
                                     </div>
-                                    <div id="zhuj"><a id="jians" >-</a>
+                                    <div id="zhuj"><a class="jians" >-</a>
                                         <p class="shul">已添加</p>
                                         <p class="shul num" id="{{$value.id}}">0</p><a class="tianj" >+</a>
                                     </div>
@@ -211,14 +211,15 @@
                     data.push(new datas(o.id,o.innerText))
                 }
             }
-            // console.log(data);
-            // JSON.stringify(data)
            $.post('/downClick',{data:JSON.stringify(data),userid:'{{userid}}'},function(res){
                location.href='/index?userid={{userid}}'
            })
         })
         $('.tianj').on('click',function(){
             $(this).prev()[0].innerHTML = parseInt($(this).prev()[0].innerText) + 1
+        })
+        $('.jians').on('click',function(){
+            $(this).next().next()[0].innerHTML = parseInt($(this).next().next()[0].innerText) - 1
         })
     </script>
 </body>
