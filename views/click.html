@@ -22,29 +22,13 @@
     <style>
         #zhuj {
             display: flex;
-            padding-left: 114px;
+            padding-left: 143px;
         }
 
         .tianj {
             font-size: 1.5em;
             text-decoration: none;
             color: white;
-        }
-
-        .jians {
-            font-size: 1.5em;
-            text-decoration: none;
-            color: white;
-        }
-
-        .shul {
-            color: white;
-            padding-left: 6px;
-            padding-right: 6px;
-        }
-        #btnan {
-            border-style: hidden;
-            background-color: white;
         }
     </style>
 </head>
@@ -71,6 +55,7 @@
                                 </ul>
                             </li>
                             <li><a class="waves-effect waves-dark" href="/click?userid={{userid}}">点单</a></li>
+                            <li><a class="waves-effect waves-dark" href="/cart?userid={{userid}}">购物车</a></li>
                             <li><a class="waves-effect waves-dark" href="/login">切换账号</a></li>
                             <li><a class="waves-effect waves-dark" href="/owen?userid={{userid}}">个人中心</a></li>
                             <li><a class="waves-effect waves-dark" href="/contact?userid={{userid}}">客户反馈</a></li>
@@ -107,12 +92,11 @@
                             <ul class="menu">
                                 {{each menu1}}
                                 <li>
-                                    {{$value.menuName}}
+                                    <p>{{$value.menuName}}</p>
                                     <div class="detail">{{$value.introduce}}<span class="price">￥{{$value.price}}</span>
                                     </div>
-                                    <div id="zhuj"><a class="jians" >-</a>
-                                        <p class="shul">已添加</p>
-                                        <p class="shul num" id="{{$value.id}}">0</p><a class="tianj" >+</a>
+                                    <div id="zhuj">
+                                        <a class="tianj" >添加购物车</a>
                                     </div>
                                 </li>
                                 {{/each}}
@@ -122,12 +106,11 @@
                             <ul class="menu">
                                 {{each menu2}}
                                 <li>
-                                    {{$value.menuName}}
+                                    <p>{{$value.menuName}}</p>
                                     <div class="detail">{{$value.introduce}}<span class="price">￥{{$value.price}}</span>
                                     </div>
-                                    <div id="zhuj"><a class="jians" >-</a>
-                                        <p class="shul">已添加</p>
-                                        <p class="shul num" id="{{$value.id}}">0</p><a class="tianj" >+</a>
+                                    <div id="zhuj">
+                                        <a class="tianj" >添加购物车</a>
                                     </div>
                                 </li>
                                 
@@ -138,20 +121,16 @@
                             <ul class="menu">
                                 {{each menu3}}
                                 <li>
-                                    {{$value.menuName}}
+                                    <p>{{$value.menuName}}</p>
                                     <div class="detail">{{$value.introduce}}<span class="price">￥{{$value.price}}</span>
                                     </div>
-                                    <div id="zhuj"><a class="jians" >-</a>
-                                        <p class="shul">已添加</p>
-                                        <p class="shul num" id="{{$value.id}}">0</p><a class="tianj" >+</a>
+                                    <div id="zhuj">
+                                        <a class="tianj" >添加购物车</a>
                                     </div>
                                 </li>
                                 {{/each}}
                             </ul>
                         </div>
-
-                        <button id="click" style="margin-left: 450px;height: 47px;width: 264px;" type="button"
-                            class="btn btn-primary btn-lg" >点击下单</button>
                     </div>
                 </div>
             </section>
@@ -198,28 +177,12 @@
     <script src="/js/animate.js"></script>
     <script src="/js/custom.js"></script>
     <script>
-        $('#click').on('click',function(){
-            class datas {
-                constructor(id,num){
-                    this.id = id,
-                    this.num = num
-                }
-            }
-            let data = []
-            for(o of Array.from($('.num'))){
-                if(o.innerText != "0"){
-                    data.push(new datas(o.id,o.innerText))
-                }
-            }
-           $.post('/downClick',{data:JSON.stringify(data),userid:'{{userid}}'},function(res){
-               location.href='/index?userid={{userid}}'
-           })
-        })
         $('.tianj').on('click',function(){
-            $(this).prev()[0].innerHTML = parseInt($(this).prev()[0].innerText) + 1
-        })
-        $('.jians').on('click',function(){
-            $(this).next().next()[0].innerHTML = parseInt($(this).next().next()[0].innerText) - 1
+            let name = $(this).parent().parent().children()[0].innerText
+            $.post('/carts',{userid:'{{userid}}',menuName:name},function(res){
+                alert(res)
+            })
+            
         })
     </script>
 </body>

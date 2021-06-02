@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Shoppers &mdash; Colorlib e-Commerce Template</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700"> -->
+  <link rel="stylesheet" href="fonts/icomoon/style.css">
+
+  <link rel="stylesheet" href="css/bootstrap.min1.css">
+  <link rel="stylesheet" href="css/magnific-popup1.css">
+  <link rel="stylesheet" href="css/jquery-ui.css">
+  <link rel="stylesheet" href="css/owl.carousel.min.css">
+  <link rel="stylesheet" href="css/owl.theme.default.min.css">
+
+
+  <link rel="stylesheet" href="css/aos.css">
+
+  <link rel="stylesheet" href="css/style1.css">
+
+</head>
+
+<body>
+
+  <div class="site-wrap">
+
+    <div class="bg-light py-3">
+      <div class="container">
+        <div class="row">
+          <div style="font-size: 2.5em;" class="col-md-12 mb-0"><a href="/index?userid={{userid}}">主页</a> <span
+              class="mx-2 mb-0">/</span> <strong class="text-black">购物车</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="background-color: rgb(222, 140, 99);" class="site-section">
+      <div class="container">
+        <div class="row mb-5">
+          <form class="col-md-12" method="post">
+            <div class="site-blocks-table">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th class="product-thumbnail">选择</th>
+                    <th class="product-name">商品名</th>
+                    <th class="product-price">单价</th>
+                    <th class="product-quantity">数量</th>
+                    <th class="product-remove">删除</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {{each cart}}
+                  <tr>
+                    <td class="product-thumbnail">
+                      <input id="click" type="radio">
+                    </td>
+                    <td class="product-name">
+                      <h2 id="{{$value.menu_id}}" class="h5 text-black">{{$value.menuName}}</h2>
+                    </td>
+                    <td id="{{$value.num}}" class="money">{{$value.price}}</td>
+                    <td>
+                      <div class="input-group mb-3" style="max-width: 120px;">
+                        <div class="input-group-prepend">
+                          <button class="btn btn-outline-primary de " type="button">&minus;</button>
+                        </div>
+                        <input id="num" type="text" class="form-control text-center" value="{{$value.num}}"
+                          placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
+                        <div class="input-group-append">
+                          <button class="btn btn-outline-primary add " type="button">&plus;</button>
+                        </div>
+                      </div>
+
+                    </td>
+                    <td><a href="/delCart?c_id={{$value.id}}" class="btn btn-primary btn-sm">X</a></td>
+                  </tr>
+                  {{/each}}
+                </tbody>
+              </table>
+            </div>
+          </form>
+        </div>
+
+        <div class="row">
+          <div style="margin-left: 550px;" class="col-md-6 pl-5">
+            <div class="row justify-content-end">
+              <div class="col-md-7">
+                <div class="row">
+                  <div class="col-md-12 text-right border-bottom mb-5">
+                    <h3 class="text-black h4 text-uppercase">共计</h3>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <span class="text-black">商品总计</span>
+                  </div>
+                  <div class="col-md-6 text-right">
+                    <strong id="all" class="text-black">￥0.00</strong>
+                  </div>
+                </div>
+                <div class="row mb-5">
+                  <div class="col-md-6">
+                    <span class="text-black">选择总计</span>
+                  </div>
+                  <div class="col-md-6 text-right">
+                    <strong id="clickAll" class="text-black">￥0.00</strong>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-12">
+                    <button class="btn btn-primary btn-lg py-3 btn-block" id="down">下单</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+  <script src="js/jquery-3.3.1.min.js"></script>
+  <script src="js/jquery-ui.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/owl.carousel.min.js"></script>
+  <script src="js/jquery.magnific-popup.min1.js"></script>
+  <script src="js/aos.js"></script>
+
+  <script src="js/main.js"></script>
+  <script>
+ 
+    class datas {
+      constructor(num,name){
+        this.num = num,
+        this.name = name
+      }
+    }
+    {
+      let all = 0
+      for (o of Array.from($('.money'))) {
+        all += parseFloat(o.innerText) * parseFloat(o.id)
+      }
+      $('#all')[0].innerHTML = all
+    }
+
+    $('#click').on('click', function () {
+      console.log($(this).parent().next().next());
+
+    })
+
+    let a = []
+    let clickAll = 0
+    $('input:radio').click(function () {
+      var $radio = $(this);
+      if ($radio.data('checked')) {
+        //取消
+        $radio.prop('checked', false);
+        $radio.data('checked', false);
+        clickAll -= parseFloat($(this).parent().next().next()[0].innerText) * parseFloat($(this).parent().next().next()[0].id)
+        $('#clickAll')[0].innerHTML = clickAll
+        a = a.filter((v,i,a)=>{
+             return v.name != $(this).parent().next().children()[0].innerText
+        })
+      } else {
+        //点击
+        $radio.prop('checked', true);
+        $radio.data('checked', true);
+        clickAll += parseFloat($(this).parent().next().next()[0].innerText) * parseFloat($(this).parent().next().next()[0].id)
+        $('#clickAll')[0].innerHTML = clickAll
+        a.push(new datas($(this).parent().next().next()[0].id,$(this).parent().next().children()[0].innerText))
+      }
+    })
+
+    $('.de').on('click',function(){
+      let id = $(this).parent().parent().parent().prev().prev().children()[0].id
+      $.post('/deCart',{userid:'{{userid}}',id :id},function(res){
+             window.location.href='/cart?userid={{userid}}'
+      })
+    })
+
+    $('.add').on('click',function(){
+      let id = $(this).parent().prev().prev().parent().parent().prev().prev().children()[0].id
+      console.log(id);
+      $.post('/addCart',{userid:'{{userid}}',id :id},function(res){
+             window.location.href='/cart?userid={{userid}}'
+      })
+    })
+$('#down').on('click',function(){
+  $.post('/downClick',{userid:'{{userid}}',data:JSON.stringify(a)},function(res){
+      alert(res)
+      location.href='/index?userid={{userid}}'
+    })
+})
+  </script>
+
+</body>
+
+</html>

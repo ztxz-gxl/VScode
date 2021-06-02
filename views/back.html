@@ -105,6 +105,7 @@
                 <div class="row">
                     <p style="text-align: center;font-size: 2em;color: black;">订单</p>
                     <table  id="tab" style="border-style: solid;color: white;">
+                        <tbody id="tb">
                         <tr>
                             <td >订单号</td>
                             <td>订单</td>
@@ -122,6 +123,7 @@
                             </td>
                         </tr>
                         {{/each}}
+                    </tbody>
                     </table>
                     <p id="orderMore1" style="text-align: center;border-style: solid;border-color: #9e9e9ead;background-color: #9e9e9ead;
                         color: wheat;">点击查看更多</p>
@@ -130,6 +132,7 @@
                     <div class="row">
                         <p style="text-align: center;font-size: 2em;color: black;">反馈</p>
                         <table id="tab" style="border-style: solid;color: white;">
+                            <tbody id="tb1" >
                             <tr>
                                 <td >序号</td>
                                 <td >反馈内容</td>
@@ -147,6 +150,7 @@
                                 </td>
                             </tr>
                             {{/each}}
+                        </tbody>
                         </table>
                         <p id="orderMore2" style="text-align: center;border-style: solid;border-color: #9e9e9ead;background-color: #9e9e9ead;
                         color: wheat;">点击查看更多</p>
@@ -193,15 +197,59 @@
     <script src="/js/jquery.magnific-popup.min.js"></script>
     <script src="/js/animate.js"></script>
     <script src="/js/custom.js"></script>
+    <script src="/js/template-native.js"></script>
     <script>
+    
         $('#orderMore1').on('click',function(){
                 let count = 1
-            $.post('/orderMore1',{userid:'{{userid}}',count:count},function(response){})
+            $.post('/orderMore1',{userid:'{{userid}}',count:count},function(response){
+                let all = ""
+                let tit = `<tr>
+                            <td >订单号</td>
+                            <td>订单</td>
+                            <td>处理情况(0为未处理,1为已处理)</td>
+                            <td>操作</td>
+                        </tr>`
+                for (o of response.click){
+                    let tb = `<tr>
+                            <td >${o.id}</td>
+                            <td >${o.order}</td>
+                            <td>${o.states}</td>
+                            <td >
+                                <input type="button" value="详情" id="btn0" onclick="location.href='/back/showOrder?orderID=${o.id}&userid={{userid}}'">
+                                <input type="button" value="删除" id="btn2" onclick="location.href='/back/del?orderID=${o.id}&userid={{userid}}'">
+                            </td>
+                        </tr>`
+                        all += tb
+                }
+                $('#tb')[0].innerHTML = tit + all
+            })
         })
 
         $('#orderMore2').on('click',function(){
                 let count = 1
-            $.post('/orderMore2',{userid:'{{userid}}',count:count},function(response){})
+            $.post('/orderMore2',{userid:'{{userid}}',count:count},function(response){
+                let all = ""
+                let tit = `<tr>
+                                <td >序号</td>
+                                <td >反馈内容</td>
+                                <td >提交时间</td>
+                                <td>操作</td>
+                            </tr>`
+                for (o of response.feedback){
+                    let tb1 = `<tr>
+                                <td >${o.id}</td>
+                                <td>${o.feed}</td>
+                                <td >${o.createTime}</td>
+                                <td >
+                                    <input type="button" value="详情" id="btn0" onclick="location.href='/back/showFeed?ID=${o.id}&userid={{userid}}'">
+                                    <input type="button" value="删除" id="btn2" onclick="location.href='/back/delFeed?ID=${o.id}&userid={{userid}}'">
+                                </td>
+                            </tr>`
+                        all += tb1
+                }
+                $('#tb1')[0].innerHTML = tit + all
+            })
         })
     </script>
 </body>

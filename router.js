@@ -36,7 +36,7 @@ router.get('/back', function (req, res) {
             return
 
         }
-        sql.Select('SELECT id,`order` FROM click limit 8 ', function (err, result2) {
+        sql.Select('SELECT id,`order`,states FROM click limit 8 ', function (err, result2) {
             if (err) {
                 outErr.LOG('select is fail:' + err)
                 return
@@ -350,10 +350,61 @@ router.get('/back/showOrder', function (req, res) {
     })
 })
 
-router.post('/back/finish',function(req,res){
-    sql.Update('UPDATE click SET states = 1 WHERE id = ?',req.body.orderID,function(err){
-        if(err){
-            outErr.LOG('update is fail:'+err)
+router.get('/cart', function (req, res) {
+    sql.Selects('SELECT c.id,c.num,m.menuName,m.price,c.menu_id FROM cart c INNER JOIN menu m ON c.menu_id = m.id WHERE user_id = ?', 11, function (err, result) {
+        if (err) {
+            outErr.LOG('update is fail:' + err)
+            return
+        }
+        res.render('cart.html', {
+            cart: result,
+            userid: 11
+        })
+    })
+})
+
+router.post('/carts', function (req, res) {
+    sql.Selects('SELECT id FROM menu WHERE menuName = ?', req.body.menuName, function (err, result) {
+        if (err) {
+            outErr.LOG('select is fail:' + err)
+            return
+        }
+        sql.Insert('INSERT INTO cart(user_id,menu_id,num) VALUES(?,?,?) ON DUPLICATE KEY UPDATE  num = num + 1', [req.body.userid, result[0].id, 1], function (err) {
+            if (err) {
+                outErr.LOG('insert is fail:' + err)
+                return
+            }
+            res.send('添加成功')
+        })
+    })
+
+})
+
+router.post('/deCart', function (req, res) {
+    sql.Update('UPDATE cart SET num = num - 1 WHERE user_id = ? AND menu_id = ? ', [req.body.userid, req.body.id], function (err) {
+        if (err) {
+            outErr.LOG('update is fail:' + err)
+            return
+        }
+        res.send('减少成功')
+    })
+})
+
+router.post('/addCart', function (req, res) {
+    sql.Update('UPDATE cart SET num = num + 1 WHERE user_id = ? AND menu_id = ? ', [req.body.userid, req.body.id], function (err) {
+        if (err) {
+            outErr.LOG('update is fail:' + err)
+            return
+        }
+        res.send('增加成功')
+    })
+})
+
+router.post('/back/finish', function (req, res) {
+    let time = sd.format(new Date(), 'YYYY-MM-DD HH:mm:ss')
+    sql.Update('UPDATE click SET states = 1,upTime = ? WHERE id = ?', [req.body.orderID, time], function (err) {
+        if (err) {
+            outErr.LOG('update is fail:' + err)
             return
         }
         res.send('订单已完成')
@@ -370,18 +421,26 @@ router.post('/downClick', function (req, res) {
         let order = ""
         for (i of result) {
             for (o of JSON.parse(req.body.data)) {
-                if (parseInt(i.id) === parseInt(o.id)) {
+                if (i.menuName === o.name) {
                     all += parseFloat(i.price) * parseFloat(o.num)
                     order += (i.menuName + "x" + o.num + " ")
+                    sql.Deletes('DELETE FROM cart WHERE user_id = ? AND menu_id =? ', [req.body.userid, i.id], function (err) {
+                        if (err) {
+                            outErr.LOG('delete is fail:' + err)
+                            return
+                        }
+                    })
                 }
             }
         }
         let time = sd.format(new Date(), 'YYYY-MM-DD HH:mm:ss')
         sql.Insert('INSERT INTO click(userid,`order`,`all`,createTime) values(?,?,?,?)', [parseInt(req.body.userid), order, all, time], function (err) {
-            outErr.LOG('insert is fail:' + err)
-            return
+            if (err) {
+                outErr.LOG('insert is fail:' + err)
+                return
+            }
+            res.send('下单成功')
         })
-        res.send()
     })
 })
 
@@ -463,8 +522,9 @@ router.post('/login', function (req, res) {
             }
             if (ok) {
                 let md5 = crypto.createHash('md5')
-                let addSql = 'INSERT INTO user VALUES(null,?,?,?,?)'
-                let addSqlParams = [body.useName, body.name, md5.update(body.password).digest('hex'), body.email]
+                let time = sd.format(new Date(), 'YYYY-MM-DD HH:mm:ss')
+                let addSql = 'INSERT INTO user(useName,password,email,createTime) VALUES(?,?,?,?)'
+                let addSqlParams = [body.useName, md5.update(body.password).digest('hex'), body.email, time]
                 sql.Insert(addSql, addSqlParams, function (err) {
                     if (err) {
                         outErr.LOG('insert is fail:' + err)
@@ -536,8 +596,8 @@ router.post('/back/main', function (req, res) {
         if (ok) {
             let md5 = crypto.createHash('md5')
             let time = sd.format(new Date(), 'YYYY-MM-DD HH:mm:ss')
-            let addSql = 'INSERT INTO seller(useName,password,addr,num,createTime) VALUES(?,?,?,?,?)'
-            let addSqlParams = [body.useName, md5.update(body.password).digest('hex'), body.addr, body.num, time]
+            let addSql = 'INSERT INTO seller(useName,password,createTime) VALUES(?,?,?,?,?)'
+            let addSqlParams = [body.useName, md5.update(body.password).digest('hex'), time]
             sql.Insert(addSql, addSqlParams, function (err) {
                 if (err) {
                     outErr.LOG('insert is fail:' + err)
@@ -612,74 +672,30 @@ router.post('/back', function (req, res) {
 })
 
 router.post('/orderMore1', function (req, res) {
-    let from = 8 * req.body.count
-    sql.Selects('SELECT useName,imgAddr FROM seller WHERE id = ?', parseInt(req.body.userid), function (err, result) {
+    let from = 8 * req.body.count + 8
+    sql.Selects('SELECT id,`order`,states FROM click limit ? ', from, function (err, result2) {
         if (err) {
             outErr.LOG('select is fail:' + err)
             return
 
         }
-        sql.Select('SELECT id,`order`,states FROM click limit 8 ', function (err, result2) {
-            if (err) {
-                outErr.LOG('select is fail:' + err)
-                return
-
-            }
-            sql.Select('SELECT * FROM feedback limit 8', function (err, result3) {
-                if (err) {
-                    outErr.LOG('select is fail:' + err)
-                    return
-
-                }
-                for (i of result3) {
-                    var dateee = new Date(i.createTime).toJSON();
-                    i.createTime = new Date(+new Date(dateee) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '')
-                }
-                res.render('back.html', {
-                    userid: req.query.userid,
-                    imgAddr: result[0].imgAddr,
-                    useName: result[0].useName,
-                    click: result2,
-                    feedback: result3
-                })
-            })
-        })
+        res.send({ click: result2 })
     })
 })
 
 router.post('/orderMore2', function (req, res) {
-    let from = 8 * req.body.count
-    sql.Selects('SELECT useName,imgAddr FROM seller WHERE id = ?', parseInt(req.body.userid), function (err, result) {
+    let from = 8 * req.body.count + 8
+    sql.Selects('SELECT * FROM feedback limit ?', from, function (err, result3) {
         if (err) {
             outErr.LOG('select is fail:' + err)
             return
 
         }
-        sql.Select('SELECT id,`order`,states FROM click limit 8 ', function (err, result2) {
-            if (err) {
-                outErr.LOG('select is fail:' + err)
-                return
-
-            }
-            sql.Selects('SELECT * FROM feedback limit ?,8', from, function (err, result3) {
-                if (err) {
-                    outErr.LOG('select is fail:' + err)
-                    return
-
-                }
-                for (i of result3) {
-                    var dateee = new Date(i.createTime).toJSON();
-                    i.createTime = new Date(+new Date(dateee) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '')
-                }
-                res.render('back.html', {
-                    userid: req.query.userid,
-                    imgAddr: result[0].imgAddr,
-                    useName: result[0].useName,
-                    click: result2,
-                    feedback: result3
-                })
-            })
-        })
+        for (i of result3) {
+            var dateee = new Date(i.createTime).toJSON();
+            i.createTime = new Date(+new Date(dateee) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '')
+        }
+        res.send({ feedback: result3 })
     })
 })
 

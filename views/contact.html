@@ -39,6 +39,7 @@
 								</ul>
 							</li>
 							<li><a class="waves-effect waves-dark" href="/click?userid={{userid}}">点单</a></li>
+							<li><a class="waves-effect waves-dark" href="/cart?userid={{userid}}">购物车</a></li>
 							<li><a class="waves-effect waves-dark" href="/login">切换账号</a></li>
 							<li><a class="waves-effect waves-dark" href="/owen?userid={{userid}}">个人中心</a></li>
 							<li><a class="waves-effect waves-dark" href="/contact?userid={{userid}}">客户反馈</a></li>
@@ -75,14 +76,14 @@
 							<div class="input-field">
 								<input type="text" name="name" class="form-control" id="name" required
 									data-validation-required-message="Please enter your name" />
-								<label for="phone" class=""> Phone </label>
+								<label for="phone" class=""> 电话 </label>
 								<p class="help-block"></p>
 
 							</div>
 							<div class="input-field">
 								<input type="email" class="form-control" id="email" 
 									data-validation-required-message="Please enter your email" />
-								<label for="name" class=""> Email </label>
+								<label for="name" class=""> 邮箱地址 </label>
 							</div>
 
 							<div class="input-field">
@@ -90,7 +91,7 @@
 									idation-required-message="Please enter your message" minlength="5"
 									data-validation-minlength-message="Min 5 characters" maxlength="999"
 									style="resize:none"></textarea>
-								<label for="name" class=""> Message </label>
+								<label for="name" class=""> 反馈信息 </label>
 							</div>
 							<div id="success"> </div> <!-- For success/fail messages -->
 							<button type="submit"

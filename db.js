@@ -27,6 +27,15 @@ exports.Delete = function (id, tab_nanme, callback) {
     })
 }
 
+exports.Deletes = function (sqlStr, delsql,callback) {
+    connection.query(sqlStr, delsql, function (err, _result) {
+        if (err) {
+            return callback(err)
+        }
+        callback(null)
+    })
+}
+
 exports.Update = function (sqlStr, upSql, callback) {
     connection.query(sqlStr, upSql, function (err, _result) {
         if (err) {

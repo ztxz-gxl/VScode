@@ -79,11 +79,11 @@
 			}
 		}
 
-		$('#sendEmail').on('click', () => {
-			$.post('/sendEmail', { email: $('#email')[0].value }, function (response) {
-				$('#text')[0].innerHTML = response.text
-			})
-		})
+		// $('#sendEmail').on('click', () => {
+		// 	$.post('/sendEmail', { email: $('#email')[0].value }, function (response) {
+		// 		$('#text')[0].innerHTML = response.text
+		// 	})
+		// })
 
 		$(".input").focusin(function () {
 			$(this).find("span").animate({
