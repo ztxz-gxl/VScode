@@ -8,28 +8,31 @@ let sql = require('./db')
 let outErr = require('./log')
 let ver = require('./verification')
 const { LOADIPHLPAPI } = require('dns')
-
+//注册
 router.get('/resg', function (_req, res) {
     res.render('resg.html')
 })
-
+//登录
 router.get('/login', function (_req, res) {
     res.render('login.html')
 })
-
+//关于我们
 router.get('/about', function (_req, res) {
     res.render('about.html')
 })
-
+//后台登录
 router.get('/back/main', function (_req, res) {
     res.render('backLogin.html')
 })
-
+//后台注册
 router.get('/back/resg', function (_req, res) {
     res.render('backResg.html')
 })
-
+//后台
 router.get('/back', function (req, res) {
+    if (isNaN(req.query.userid)) {
+        return
+    }
     sql.Selects('SELECT useName,imgAddr FROM seller WHERE id = ?', req.query.userid, function (err, result) {
         if (err) {
             outErr.LOG('select is fail:' + err)
@@ -64,8 +67,11 @@ router.get('/back', function (req, res) {
         })
     })
 })
-
+//后台菜单
 router.get('/back/showMenu', function (req, res) {
+    if (isNaN(req.query.userid)) {
+        return
+    }
     sql.Select('SELECT * FROM menu', function (err, result) {
         if (err) {
             outErr.LOG('select is fail:' + err)
@@ -95,8 +101,11 @@ router.get('/back/showMenu', function (req, res) {
         })
     })
 })
-
+//菜单牛肉面、粉
 router.get('/beef', function (req, res) {
+    if (isNaN(req.query.userid)) {
+        return
+    }
     sql.Selects('SELECT * FROM menu WHERE soft = ?', '牛肉面、粉', function (err, result) {
         if (err) {
             outErr.LOG('select is fail:' + err)
@@ -108,8 +117,11 @@ router.get('/beef', function (req, res) {
         })
     })
 })
-
+//点单
 router.get('/click', function (req, res) {
+    if (isNaN(req.query.userid)) {
+        return
+    }
     sql.Select('SELECT * FROM menu', function (err, result) {
         if (err) {
             outErr.LOG('select is fail:' + err)
@@ -139,14 +151,20 @@ router.get('/click', function (req, res) {
         })
     })
 })
-
+//反馈
 router.get('/contact', function (req, res) {
+    if (isNaN(req.query.userid)) {
+        return
+    }
     res.render('contact.html', {
         userid: req.query.userid
     })
 })
-
+//菜单饮料
 router.get('/drink', function (req, res) {
+    if (isNaN(req.query.userid)) {
+        return
+    }
     sql.Selects('SELECT * FROM menu WHERE soft = ?', '饮料', function (err, result) {
         if (err) {
             outErr.LOG('select is fail:' + err)
@@ -162,12 +180,18 @@ router.get('/drink', function (req, res) {
 router.get('/', function (_req, res) {
     res.render('main.html')
 })
-
+//主界面
 router.get('/index', function (req, res) {
+    if (isNaN(req.query.userid)) {
+        return
+    }
     res.render('index.html', { userid: req.query.userid })
 })
-
+//菜单素菜配菜面、粉
 router.get('/nood', function (req, res) {
+    if (isNaN(req.query.userid)) {
+        return
+    }
     sql.Selects('SELECT * FROM menu WHERE soft = ?', '素菜配菜面、粉', function (err, result) {
         if (err) {
             outErr.LOG('select is fail:' + err)
@@ -179,8 +203,11 @@ router.get('/nood', function (req, res) {
         })
     })
 })
-
+//菜单其他
 router.get('/other', function (req, res) {
+    if (isNaN(req.query.userid)) {
+        return
+    }
     sql.Selects('SELECT * FROM menu WHERE soft = ?', '其他', function (err, result) {
         if (err) {
             outErr.LOG('select is fail:' + err)
@@ -192,8 +219,11 @@ router.get('/other', function (req, res) {
         })
     })
 })
-
+//个人中心
 router.get('/owen', function (req, res) {
+    if (isNaN(req.query.userid)) {
+        return
+    }
     sql.Selects('SELECT c.id,`order`,useName,c.createTime,imgAddr FROM click c INNER JOIN `user` u on u.id = c.userid WHERE u.id = ?', req.query.userid, function (err, result) {
         if (err) {
             outErr.LOG('select is fail:' + err)
@@ -211,8 +241,11 @@ router.get('/owen', function (req, res) {
         })
     })
 })
-
+//后台反馈详情
 router.get('/back/showFeed', function (req, res) {
+    if (isNaN(req.query.userid)) {
+        return
+    }
     sql.Selects('SELECT * FROM feedback', function (err, result) {
         if (err) {
             outErr.LOG('select is fail:' + err)
@@ -232,14 +265,20 @@ router.get('/back/showFeed', function (req, res) {
     })
 
 })
-
+//添加新菜
 router.get('/back/addMenu', function (req, res) {
+    if (isNaN(req.query.userid)) {
+        return
+    }
     res.render('addMenu.html', {
         userid: req.query.userid
     })
 })
-
+//修改菜单
 router.get('/back/upMenu', function (req, res) {
+    if (isNaN(req.query.userid)) {
+        return
+    }
     sql.Selects('SELECT * FROM menu WHERE id = ?', req.query.id, function (err, result) {
         if (err) {
             outErr.LOG('select is fail:' + err)
@@ -255,8 +294,11 @@ router.get('/back/upMenu', function (req, res) {
         })
     })
 })
-
+//删除菜
 router.get('/back/delMenu', function (req, res) {
+    if (isNaN(req.query.userid)) {
+        return
+    }
     sql.Delete(req.query.id, 'menu', function (err) {
         if (err) {
             outErr.LOG('delete is fail:' + err)
@@ -265,8 +307,11 @@ router.get('/back/delMenu', function (req, res) {
         res.redirect('/back/showMenu?userid=' + req.query.userid)
     })
 })
-
+//删除订单
 router.get('/del', function (req, res) {
+    if (isNaN(req.query.userid)) {
+        return
+    }
     sql.Delete(req.query.orderID, 'click', function (err) {
         if (err) {
             outErr.LOG('delete is fail:' + err)
@@ -277,6 +322,9 @@ router.get('/del', function (req, res) {
 })
 
 router.get('/back/del', function (req, res) {
+    if (isNaN(req.query.userid)) {
+        return
+    }
     sql.Delete(req.query.orderID, 'click', function (err) {
         if (err) {
             outErr.LOG('delete is fail:' + err)
@@ -285,8 +333,11 @@ router.get('/back/del', function (req, res) {
         res.redirect('/back?userid=' + req.query.userid)
     })
 })
-
+//删除反馈
 router.get('/back/delFeed', function (req, res) {
+    if (isNaN(req.query.userid)) {
+        return
+    }
     sql.Delete(req.query.ID, 'feedback', function (err) {
         if (err) {
             outErr.LOG('delete is fail:' + err)
@@ -295,8 +346,11 @@ router.get('/back/delFeed', function (req, res) {
         res.redirect('/back?userid=' + req.query.userid)
     })
 })
-
+//显示订单详情
 router.get('/showOrderMain', function (req, res) {
+    if (isNaN(req.query.userid)) {
+        return
+    }
     sql.Selects('SELECT `order`,`all`,createTime FROM click WHERE id = ?', req.query.orderID, function (err, result) {
         if (err) {
             outErr.LOG('select is fail:' + err)
@@ -313,8 +367,11 @@ router.get('/showOrderMain', function (req, res) {
         })
     })
 })
-
+//修改菜单图片
 router.get('/back/addimgs', function (req, res) {
+    if (isNaN(req.query.userid)) {
+        return
+    }
     sql.Selects('SELECT * FROM menu WHERE id = ?', req.query.id, function (err, result) {
         if (err) {
             outErr.LOG('select is fail:' + err)
@@ -331,8 +388,11 @@ router.get('/back/addimgs', function (req, res) {
         })
     })
 })
-
+//后台订单详情
 router.get('/back/showOrder', function (req, res) {
+    if (isNaN(req.query.userid)) {
+        return
+    }
     sql.Selects('SELECT `order`,`all`,createTime FROM click WHERE id = ?', req.query.orderID, function (err, result) {
         if (err) {
             outErr.LOG('select is fail:' + err)
@@ -349,8 +409,11 @@ router.get('/back/showOrder', function (req, res) {
         })
     })
 })
-
+//购物车
 router.get('/cart', function (req, res) {
+    if (isNaN(req.query.userid)) {
+        return
+    }
     sql.Selects('SELECT c.id,c.num,m.menuName,m.price,c.menu_id FROM cart c INNER JOIN menu m ON c.menu_id = m.id WHERE user_id = ?', 11, function (err, result) {
         if (err) {
             outErr.LOG('update is fail:' + err)
@@ -402,7 +465,7 @@ router.post('/addCart', function (req, res) {
 
 router.post('/back/finish', function (req, res) {
     let time = sd.format(new Date(), 'YYYY-MM-DD HH:mm:ss')
-    sql.Update('UPDATE click SET states = 1,upTime = ? WHERE id = ?', [req.body.orderID, time], function (err) {
+    sql.Update('UPDATE click SET states = 1,upTime = ? WHERE id = ?', [time, req.body.orderID], function (err) {
         if (err) {
             outErr.LOG('update is fail:' + err)
             return
@@ -445,6 +508,9 @@ router.post('/downClick', function (req, res) {
 })
 
 router.post('/back/addMenu', function (req, res) {
+    if (isNaN(req.query.userid)) {
+        return
+    }
     let body = req.body
     sql.Insert('INSERT INTO menu values(null,?,?,?,?)', [body.MenuName, body.introduce, body.price, body.soft], function (err) {
         if (err) {
@@ -456,6 +522,9 @@ router.post('/back/addMenu', function (req, res) {
 })
 
 router.post('/back/upMenu', function (req, res) {
+    if (isNaN(req.query.userid)) {
+        return
+    }
     let body = req.body
     sql.Update('UPDATE menu SET menuName = ? ,introduce = ? , price = ? , soft = ? WHERE id = ?',
         [body.MenuName, body.introduce, body.price, body.soft, req.query.id], function (err) {
@@ -468,6 +537,9 @@ router.post('/back/upMenu', function (req, res) {
 })
 
 router.post('/back/upload', function (req, res) {
+    if (isNaN(req.query.userid)) {
+        return
+    }
     let form = new Formidable.IncomingForm()
     form.parse(req, function (err, fields, files) {
         let tempPath = files.file.path
@@ -485,6 +557,9 @@ router.post('/back/upload', function (req, res) {
 })
 
 router.post('/upload', function (req, res) {
+    if (isNaN(req.query.userid)) {
+        return
+    }
     let form = new Formidable.IncomingForm()
     form.parse(req, function (err, fields, files) {
         let tempPath = files.file.path
@@ -502,6 +577,9 @@ router.post('/upload', function (req, res) {
 })
 
 router.post('/back/upImg', function (req, res) {
+    if (isNaN(req.query.userid)) {
+        return
+    }
     let form = new Formidable.IncomingForm()
     form.parse(req, function (err, fields, files) {
         let tempPath = files.file.path
@@ -516,6 +594,22 @@ router.post('/back/upImg', function (req, res) {
             res.redirect('/back/showMenu?userid=' + req.query.userid)
         })
     })
+})
+
+router.post('/addContact', function (req, res) {
+    let body = req.body
+    let time = sd.format(new Date(), 'YYYY-MM-DD HH:mm:ss')
+    sql.Insert('INSERT INTO feedback values(null,?,?,?,?)', [body.phone, body.email, body.feed, time], function (err) {
+
+        if (err) {
+            outErr.LOG('insert is fail:' + err)
+            return
+        }
+        res.render('jump.html', {
+            userid: req.query.userid
+        })
+    })
+
 })
 
 router.post('/login', function (req, res) {

@@ -72,26 +72,26 @@
 				<div class="row">
 					<div style="margin-left: 290px;" class="col-md-6">
 						<!-- Form itself -->
-						<form name="sentMessage" id="contactForm" action="#" novalidate>
+						<form name="sentMessage" method="POST" id="contactForm" action="/addContact?userid={{userid}}" novalidate>
 							<div class="input-field">
-								<input type="text" name="name" class="form-control" id="name" required
+								<input type="text" name="phone" class="form-control" id="name" required
 									data-validation-required-message="Please enter your name" />
 								<label for="phone" class=""> 电话 </label>
 								<p class="help-block"></p>
 
 							</div>
 							<div class="input-field">
-								<input type="email" class="form-control" id="email" 
+								<input type="email" name="email" class="form-control" id="email" 
 									data-validation-required-message="Please enter your email" />
-								<label for="name" class=""> 邮箱地址 </label>
+								<label for="email" class=""> 邮箱地址 </label>
 							</div>
 
 							<div class="input-field">
 								<textarea rows="10" cols="100" required class="form-control materialize-textarea"
 									idation-required-message="Please enter your message" minlength="5"
 									data-validation-minlength-message="Min 5 characters" maxlength="999"
-									style="resize:none"></textarea>
-								<label for="name" class=""> 反馈信息 </label>
+									style="resize:none" name="feed"></textarea>
+								<label for="feed" class=""> 反馈信息 </label>
 							</div>
 							<div id="success"> </div> <!-- For success/fail messages -->
 							<button type="submit"
