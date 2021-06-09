@@ -484,6 +484,23 @@ router.post('/back/upload', function (req, res) {
     })
 })
 
+router.post('/upload', function (req, res) {
+    let form = new Formidable.IncomingForm()
+    form.parse(req, function (err, fields, files) {
+        let tempPath = files.file.path
+        let rs = fs.createReadStream(tempPath)
+        let ws = fs.createWriteStream('./public/img/' + files.file.name)
+        rs.pipe(ws)
+        sql.Update('UPDATE user SET imgAddr = ? WHERE id = ?', [files.file.name, req.query.userid], function (err) {
+            if (err) {
+                outErr.LOG('update is fail:' + err)
+                return
+            }
+            res.redirect('/owen?userid=' + req.query.userid)
+        })
+    })
+})
+
 router.post('/back/upImg', function (req, res) {
     let form = new Formidable.IncomingForm()
     form.parse(req, function (err, fields, files) {
